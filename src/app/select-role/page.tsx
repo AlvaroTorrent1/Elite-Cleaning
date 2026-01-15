@@ -1,8 +1,8 @@
 'use client'
 
 import { createClient } from '@/lib/supabase/client'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 
 type UserRole = 'admin' | 'cleaner' | 'property_manager'
@@ -62,9 +62,8 @@ const roleOptions = [
   },
 ]
 
-export default function SelectRolePage() {
+function SelectRoleContent() {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(false)
   const [selectedRole, setSelectedRole] = useState<UserRole | null>(null)
   const supabase = createClient()
@@ -204,5 +203,17 @@ export default function SelectRolePage() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function SelectRolePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-[#D4A5B3] via-[#E8D4DC] to-[#8B7BA8] flex items-center justify-center">
+        <div className="text-white text-lg">Cargando...</div>
+      </div>
+    }>
+      <SelectRoleContent />
+    </Suspense>
   )
 }

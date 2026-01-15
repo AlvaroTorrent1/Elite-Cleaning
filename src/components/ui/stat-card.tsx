@@ -1,11 +1,47 @@
 import { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
+/**
+ * StatCard Component - Elite Cleaning
+ * 
+ * Usa colores del tema para consistencia visual.
+ * Los iconos usan la paleta rosa/lila corporativa.
+ * 
+ * Variantes de iconos disponibles:
+ * - primary: Rosa corporativo
+ * - secondary: Lila
+ * - accent1-5: Variaciones de rosa/lila
+ * - muted: Gris neutro
+ */
+
+// Variantes de color para iconos usando la paleta corporativa
+export const iconVariants = {
+  // Colores corporativos principales
+  primary: { icon: 'text-primary', bg: 'bg-primary/10' },
+  secondary: { icon: 'text-secondary', bg: 'bg-secondary/10' },
+  
+  // Variantes de acento (gama rosa-lila)
+  accent1: { icon: 'text-[#A66B7C]', bg: 'bg-[#A66B7C]/10' },  // Rosa oscuro
+  accent2: { icon: 'text-[#A393BB]', bg: 'bg-[#A393BB]/10' },  // Lila claro  
+  accent3: { icon: 'text-[#E88BA6]', bg: 'bg-[#E88BA6]/10' },  // Rosa suave
+  accent4: { icon: 'text-[#756693]', bg: 'bg-[#756693]/10' },  // Lila profundo
+  accent5: { icon: 'text-[#C48A9B]', bg: 'bg-[#C48A9B]/10' },  // Rosa intenso
+  
+  // Gris neutro
+  muted: { icon: 'text-muted-foreground', bg: 'bg-muted' },
+} as const
+
+export type IconVariant = keyof typeof iconVariants
+
 interface StatCardProps {
   title: string
   value: string | number
   icon?: LucideIcon
+  /** Variante de color del icono (usa paleta corporativa rosa/lila) */
+  variant?: IconVariant
+  /** @deprecated Usar 'variant' en su lugar */
   iconColor?: string
+  /** @deprecated Usar 'variant' en su lugar */
   iconBgColor?: string
   trend?: {
     value: number
@@ -16,51 +52,46 @@ interface StatCardProps {
   onClick?: () => void
 }
 
-const defaultColorMap: Record<string, { icon: string; bg: string }> = {
-  blue: { icon: 'text-blue-600', bg: 'bg-blue-50' },
-  green: { icon: 'text-green-600', bg: 'bg-green-50' },
-  red: { icon: 'text-red-600', bg: 'bg-red-50' },
-  yellow: { icon: 'text-yellow-600', bg: 'bg-yellow-50' },
-  purple: { icon: 'text-purple-600', bg: 'bg-purple-50' },
-  orange: { icon: 'text-orange-600', bg: 'bg-orange-50' },
-  gray: { icon: 'text-gray-600', bg: 'bg-gray-50' },
-  cyan: { icon: 'text-cyan-600', bg: 'bg-cyan-50' },
-}
-
 function StatCard({
   title,
   value,
   icon: Icon,
-  iconColor = 'text-gray-400',
-  iconBgColor = 'bg-gray-50',
+  variant = 'primary',
+  iconColor,
+  iconBgColor,
   trend,
   subtitle,
   className,
   onClick,
 }: StatCardProps) {
   const Component = onClick ? 'button' : 'div'
+  
+  // Usar variante si no se especifican colores legacy
+  const colors = iconVariants[variant]
+  const finalIconColor = iconColor || colors.icon
+  const finalIconBg = iconBgColor || colors.bg
 
   return (
     <Component
       onClick={onClick}
       className={cn(
-        'bg-white rounded-lg border border-gray-200 p-4 text-left',
-        onClick && 'hover:shadow-md hover:border-blue-300 cursor-pointer transition-all',
+        'bg-card rounded-lg border border-border p-4 text-left',
+        onClick && 'hover:shadow-md hover:border-primary/30 cursor-pointer transition-all',
         className
       )}
     >
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0">
-          <p className="text-sm text-gray-600 truncate">{title}</p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
+          <p className="text-sm text-muted-foreground truncate">{title}</p>
+          <p className="text-2xl font-bold text-foreground mt-1">{value}</p>
           {subtitle && (
-            <p className="text-xs text-gray-500 mt-1">{subtitle}</p>
+            <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>
           )}
           {trend && (
             <p
               className={cn(
                 'text-xs font-medium mt-1',
-                trend.isPositive ? 'text-green-600' : 'text-red-600'
+                trend.isPositive ? 'text-primary' : 'text-destructive'
               )}
             >
               {trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%
@@ -68,8 +99,8 @@ function StatCard({
           )}
         </div>
         {Icon && (
-          <div className={cn('p-3 rounded-lg flex-shrink-0', iconBgColor)}>
-            <Icon className={cn('w-6 h-6', iconColor)} />
+          <div className={cn('p-3 rounded-lg flex-shrink-0', finalIconBg)}>
+            <Icon className={cn('w-6 h-6', finalIconColor)} />
           </div>
         )}
       </div>
@@ -99,4 +130,4 @@ function StatCardGrid({ children, columns = 4, className }: StatCardGridProps) {
   )
 }
 
-export { StatCard, StatCardGrid, defaultColorMap }
+export { StatCard, StatCardGrid }

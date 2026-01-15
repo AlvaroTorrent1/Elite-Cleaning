@@ -171,7 +171,291 @@ export interface Database {
           updated_at?: string
         }
       }
-      // Add more tables as needed
+      cleaning_types: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          base_price: number
+          estimated_duration_minutes: number
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          base_price: number
+          estimated_duration_minutes: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          base_price?: number
+          estimated_duration_minutes?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      cleaning_extras: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          price: number
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          price: number
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          price?: number
+          is_active?: boolean
+          created_at?: string
+        }
+      }
+      cleaning_selected_extras: {
+        Row: {
+          id: string
+          cleaning_id: string
+          extra_id: string
+          quantity: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          cleaning_id: string
+          extra_id: string
+          quantity?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          cleaning_id?: string
+          extra_id?: string
+          quantity?: number
+          created_at?: string
+        }
+      }
+      cleaning_checklists: {
+        Row: {
+          id: string
+          cleaning_id: string
+          template_id: string | null
+          checklist_data: Json
+          completed_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          cleaning_id: string
+          template_id?: string | null
+          checklist_data: Json
+          completed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          cleaning_id?: string
+          template_id?: string | null
+          checklist_data?: Json
+          completed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      cleaning_images: {
+        Row: {
+          id: string
+          cleaning_id: string
+          image_url: string
+          image_type: 'before' | 'after' | 'damage' | 'lost_item'
+          checklist_item_id: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          cleaning_id: string
+          image_url: string
+          image_type: 'before' | 'after' | 'damage' | 'lost_item'
+          checklist_item_id?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          cleaning_id?: string
+          image_url?: string
+          image_type?: 'before' | 'after' | 'damage' | 'lost_item'
+          checklist_item_id?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+      }
+      checklist_templates: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          cleaning_type_id: string | null
+          items: Json
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          cleaning_type_id?: string | null
+          items: Json
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          cleaning_type_id?: string | null
+          items?: Json
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      damage_catalog: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          category: string
+          estimated_price: number
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          category: string
+          estimated_price: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          category?: string
+          estimated_price?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      damage_reports: {
+        Row: {
+          id: string
+          cleaning_id: string
+          catalog_item_id: string | null
+          description: string
+          severity: 'low' | 'medium' | 'high'
+          status: 'pending' | 'reviewed' | 'resolved' | 'charged'
+          estimated_cost: number | null
+          actual_cost: number | null
+          image_urls: string[]
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          cleaning_id: string
+          catalog_item_id?: string | null
+          description: string
+          severity?: 'low' | 'medium' | 'high'
+          status?: 'pending' | 'reviewed' | 'resolved' | 'charged'
+          estimated_cost?: number | null
+          actual_cost?: number | null
+          image_urls?: string[]
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          cleaning_id?: string
+          catalog_item_id?: string | null
+          description?: string
+          severity?: 'low' | 'medium' | 'high'
+          status?: 'pending' | 'reviewed' | 'resolved' | 'charged'
+          estimated_cost?: number | null
+          actual_cost?: number | null
+          image_urls?: string[]
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      lost_item_reports: {
+        Row: {
+          id: string
+          cleaning_id: string
+          item_name: string
+          description: string | null
+          location_found: string | null
+          status: 'pending' | 'stored' | 'returned' | 'disposed'
+          image_urls: string[]
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          cleaning_id: string
+          item_name: string
+          description?: string | null
+          location_found?: string | null
+          status?: 'pending' | 'stored' | 'returned' | 'disposed'
+          image_urls?: string[]
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          cleaning_id?: string
+          item_name?: string
+          description?: string | null
+          location_found?: string | null
+          status?: 'pending' | 'stored' | 'returned' | 'disposed'
+          image_urls?: string[]
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
