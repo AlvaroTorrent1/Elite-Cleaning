@@ -1,0 +1,87 @@
+# Elite Cleaning Project Rules
+
+## Project Overview
+Web application for cleaning team management for vacation rental properties in Málaga, Spain.
+
+## Tech Stack
+- **Frontend:** Next.js 14+ (App Router)
+- **UI:** shadcn/ui + Tailwind CSS
+- **Backend:** Supabase (Auth, Database, Storage, Realtime)
+- **State:** TanStack Query v5
+- **Language:** TypeScript (strict mode)
+- **Deployment:** Vercel
+
+## Code Standards
+
+### File Structure
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── (auth)/            # Auth-related routes
+│   ├── (dashboard)/       # Protected dashboard routes
+│   │   ├── admin/         # Admin panel
+│   │   ├── cleaner/       # Cleaner panel
+│   │   └── pm/            # Property Manager panel
+│   └── api/               # API routes
+├── components/
+│   ├── ui/                # shadcn/ui components
+│   ├── shared/            # Shared components
+│   └── features/          # Feature-specific components
+├── lib/
+│   ├── supabase/          # Supabase client utilities
+│   ├── hooks/             # Custom React hooks
+│   ├── utils/             # Utility functions
+│   └── types/             # TypeScript types
+└── styles/                # Global styles
+```
+
+### Naming Conventions
+- **Files:** kebab-case (e.g., `cleaning-card.tsx`)
+- **Components:** PascalCase (e.g., `CleaningCard`)
+- **Functions:** camelCase, descriptive (e.g., `fetchCleaningsByDate`)
+- **Database tables:** snake_case (e.g., `cleaning_images`)
+- **TypeScript types:** PascalCase with suffix (e.g., `CleaningType`, `UserRole`)
+
+### Component Guidelines
+- Use functional components with TypeScript
+- Props interface named as `ComponentNameProps`
+- Keep components under 200 lines
+- Extract logic to custom hooks when complex
+
+### Database
+- Always use RLS policies for data access
+- Use Supabase's generated types
+- Prefer database functions for complex operations
+
+### Supabase
+- Client-side: use `createBrowserClient`
+- Server-side: use `createServerClient`
+- Always handle errors explicitly
+
+### Comments
+- Use Spanish for user-facing text
+- Use English for code comments
+- Document "why" not "what"
+
+## User Roles
+1. **admin** - Full access, single user
+2. **cleaner** - Limited to assigned cleanings, ~60 users
+3. **property_manager** - Access to own properties, ~15 users
+
+## Key Features Priority
+1. Authentication (Google OAuth)
+2. Property management
+3. iCal sync (every 15 minutes)
+4. Cleaning assignments
+5. Checklists with photos
+6. Damage/lost item reports
+7. Notifications (in-app)
+
+## Data Retention
+- Cleaning images: 30 days
+- Damage images: 90 days
+- Digital signatures: 1 year
+
+## Language
+- UI: Spanish only (Málaga, Spain)
+- Timezone: Europe/Madrid

@@ -1,0 +1,43 @@
+import { cn } from '@/lib/utils/cn'
+
+interface CleaningStatusBadgeProps {
+  status: 'pending' | 'assigned' | 'in_progress' | 'completed' | 'cancelled'
+}
+
+const statusConfig = {
+  pending: {
+    label: 'Pendiente',
+    className: 'bg-gray-100 text-gray-700',
+  },
+  assigned: {
+    label: 'Asignada',
+    className: 'bg-blue-100 text-blue-700',
+  },
+  in_progress: {
+    label: 'En Curso',
+    className: 'bg-yellow-100 text-yellow-700',
+  },
+  completed: {
+    label: 'Completada',
+    className: 'bg-green-100 text-green-700',
+  },
+  cancelled: {
+    label: 'Cancelada',
+    className: 'bg-red-100 text-red-700',
+  },
+}
+
+export function CleaningStatusBadge({ status }: CleaningStatusBadgeProps) {
+  const config = statusConfig[status]
+
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+        config.className
+      )}
+    >
+      {config.label}
+    </span>
+  )
+}

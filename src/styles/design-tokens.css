@@ -1,0 +1,213 @@
+/**
+ * Design Tokens - My Elite Cleaning
+ * Basado en la identidad corporativa de https://myelitecleaning.com/
+ * 
+ * Estos tokens definen la paleta de colores, tipografía y espaciado
+ * de toda la aplicación para mantener consistencia visual.
+ */
+
+@layer base {
+  :root {
+    /* ========================================
+       COLORES PRINCIPALES - MY ELITE CLEANING
+       Rosa malva y lila como colores corporativos
+       ======================================== */
+    --primary: 212 165 179;      /* #D4A5B3 - Rosa malva corporativo */
+    --primary-dark: 184 137 154; /* #B8899A - Rosa oscuro */
+    --primary-light: 232 212 220; /* #E8D4DC - Rosa claro */
+    
+    --secondary: 139 123 168;    /* #8B7BA8 - Lila/púrpura */
+    --secondary-dark: 111 95 140; /* #6F5F8C - Lila oscuro */
+    --secondary-light: 168 157 196; /* #A89DC4 - Lila claro */
+    
+    --success: 16 185 129;       /* #10B981 - Verde éxito */
+    --success-dark: 5 150 105;   /* #059669 - Verde oscuro */
+    
+    --warning: 245 158 11;       /* #F59E0B - Ámbar advertencias */
+    --warning-dark: 217 119 6;   /* #D97706 - Ámbar oscuro */
+
+    /* ========================================
+       COLORES NEUTRALES
+       ======================================== */
+    --background: 255 255 255;   /* #FFFFFF - Fondo blanco principal */
+    --surface: 250 250 250;      /* #FAFAFA - Tarjetas, secciones */
+    --surface-alt: 245 245 245;  /* #F5F5F5 - Fondos alternativos */
+    
+    --text-primary: 45 45 45;    /* #2D2D2D - Texto principal */
+    --text-secondary: 107 114 128; /* #6B7280 - Texto secundario */
+    --text-muted: 156 163 175;   /* #9CA3AF - Placeholders */
+    
+    --border: 229 231 235;       /* #E5E7EB - Bordes */
+    --divider: 209 213 219;      /* #D1D5DB - Separadores */
+
+    /* ========================================
+       COLORES DE ESTADO
+       ======================================== */
+    --success: 16 185 129;       /* #10B981 - Operaciones exitosas */
+    --warning: 245 158 11;       /* #F59E0B - Advertencias */
+    --error: 239 68 68;          /* #EF4444 - Errores */
+    --info: 139 123 168;         /* #8B7BA8 - Información (lila) */
+    
+    /* Estados de limpieza */
+    --status-pending: 245 158 11;    /* #F59E0B - Pendiente (ámbar) */
+    --status-assigned: 212 165 179;  /* #D4A5B3 - Asignada (rosa) */
+    --status-in-progress: 139 123 168; /* #8B7BA8 - En curso (lila) */
+    --status-completed: 16 185 129;   /* #10B981 - Completada (verde) */
+    --status-cancelled: 156 163 175;  /* #9CA3AF - Cancelada (gris) */
+
+    /* ========================================
+       TIPOGRAFÍA
+       ======================================== */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+    
+    /* Tamaños de texto */
+    --text-xs: 0.75rem;      /* 12px */
+    --text-sm: 0.875rem;     /* 14px */
+    --text-base: 1rem;       /* 16px */
+    --text-lg: 1.125rem;     /* 18px */
+    --text-xl: 1.25rem;      /* 20px */
+    --text-2xl: 1.5rem;      /* 24px */
+    --text-3xl: 1.875rem;    /* 30px */
+    --text-4xl: 2.25rem;     /* 36px */
+    
+    /* Pesos de fuente */
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+
+    /* ========================================
+       ESPACIADO
+       ======================================== */
+    --spacing-xs: 0.25rem;   /* 4px */
+    --spacing-sm: 0.5rem;    /* 8px */
+    --spacing-md: 1rem;      /* 16px */
+    --spacing-lg: 1.5rem;    /* 24px */
+    --spacing-xl: 2rem;      /* 32px */
+    --spacing-2xl: 3rem;     /* 48px */
+    --spacing-3xl: 4rem;     /* 64px */
+
+    /* ========================================
+       BORDES Y SOMBRAS
+       ======================================== */
+    --radius-sm: 0.375rem;   /* 6px - Botones pequeños */
+    --radius-md: 0.5rem;     /* 8px - Tarjetas, inputs */
+    --radius-lg: 0.75rem;    /* 12px - Modales */
+    --radius-xl: 1rem;       /* 16px - Elementos destacados */
+    --radius-full: 9999px;   /* Circular - Avatares, badges */
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+    /* ========================================
+       TRANSICIONES
+       ======================================== */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* ========================================
+       Z-INDEX
+       ======================================== */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+  }
+
+  /* ========================================
+     MODO OSCURO (Opcional - Para futuro)
+     ======================================== */
+  .dark {
+    --background: 17 24 39;      /* #111827 */
+    --surface: 31 41 55;         /* #1F2937 */
+    --surface-hover: 55 65 81;   /* #374151 */
+    
+    --text-primary: 249 250 251; /* #F9FAFB */
+    --text-secondary: 209 213 219; /* #D1D5DB */
+    --text-muted: 156 163 175;   /* #9CA3AF */
+    
+    --border: 55 65 81;          /* #374151 */
+    --divider: 75 85 99;         /* #4B5563 */
+  }
+}
+
+/* ========================================
+   UTILIDADES PERSONALIZADAS
+   ======================================== */
+@layer utilities {
+  /* Texto truncado con ellipsis */
+  .text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Líneas múltiples con ellipsis */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Scrollbar personalizado */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: rgb(var(--background));
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgb(var(--border));
+    border-radius: var(--radius-full);
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--divider));
+  }
+
+  /* Animación de entrada suave */
+  .animate-in {
+    animation: fadeIn var(--transition-base) ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass {
+    background: rgba(31, 41, 55, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
