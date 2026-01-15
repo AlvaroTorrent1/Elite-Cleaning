@@ -1,10 +1,12 @@
 'use client'
 
-import { Menu, LogOut, User } from 'lucide-react'
+import { Menu, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import NotificationBell from '@/components/shared/notification-bell'
 
 interface AdminHeaderProps {
   profile: {
+    id: string
     full_name: string | null
     email: string
   }
@@ -33,6 +35,9 @@ export default function AdminHeader({ profile }: AdminHeaderProps) {
 
         {/* Right side actions */}
         <div className="flex items-center gap-4">
+          {/* Notifications */}
+          <NotificationBell userId={profile.id} />
+          
           {/* User menu */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:block text-right">

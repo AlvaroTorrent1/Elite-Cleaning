@@ -1,11 +1,20 @@
 import { forwardRef, InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react'
 import { cn } from '@/lib/utils/cn'
 
-// Base input styles
-const inputBaseStyles =
-  'w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed'
+/**
+ * Form Field Components - Elite Cleaning
+ * 
+ * Usa los colores del tema:
+ * - focus:ring-primary para el focus ring rosa
+ * - border-input para bordes
+ * - text-foreground para texto
+ */
 
-const inputErrorStyles = 'border-red-300 focus:ring-red-500'
+// Base input styles using theme colors
+const inputBaseStyles =
+  'w-full px-3 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-colors disabled:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed'
+
+const inputErrorStyles = 'border-destructive focus:ring-destructive'
 
 // Label component
 interface LabelProps {
@@ -19,10 +28,10 @@ function Label({ children, htmlFor, required, className }: LabelProps) {
   return (
     <label
       htmlFor={htmlFor}
-      className={cn('block text-sm font-medium text-gray-700 mb-1', className)}
+      className={cn('block text-sm font-medium text-foreground mb-1', className)}
     >
       {children}
-      {required && <span className="text-red-500 ml-0.5">*</span>}
+      {required && <span className="text-destructive ml-0.5">*</span>}
     </label>
   )
 }
@@ -36,7 +45,7 @@ interface ErrorMessageProps {
 function ErrorMessage({ children, className }: ErrorMessageProps) {
   if (!children) return null
   return (
-    <p className={cn('text-sm text-red-600 mt-1', className)}>{children}</p>
+    <p className={cn('text-sm text-destructive mt-1', className)}>{children}</p>
   )
 }
 
@@ -48,7 +57,7 @@ interface HintProps {
 
 function Hint({ children, className }: HintProps) {
   return (
-    <p className={cn('text-xs text-gray-500 mt-1', className)}>{children}</p>
+    <p className={cn('text-xs text-muted-foreground mt-1', className)}>{children}</p>
   )
 }
 
@@ -74,7 +83,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
               {leftIcon}
             </div>
           )}
@@ -92,7 +101,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
               {rightIcon}
             </div>
           )}
@@ -207,17 +216,17 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             type="checkbox"
             id={checkboxId}
             className={cn(
-              'w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mt-0.5',
+              'w-4 h-4 text-primary border-input rounded focus:ring-primary mt-0.5',
               className
             )}
             {...props}
           />
           <div>
-            <label htmlFor={checkboxId} className="text-sm font-medium text-gray-700">
+            <label htmlFor={checkboxId} className="text-sm font-medium text-foreground">
               {label}
             </label>
             {description && (
-              <p className="text-xs text-gray-500">{description}</p>
+              <p className="text-xs text-muted-foreground">{description}</p>
             )}
           </div>
         </div>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { ArrowLeft, Save } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Button,
   Input,
@@ -214,29 +215,66 @@ export default function PropertyForm({ property, propertyManagers }: PropertyFor
           URLs de calendario para sincronizar reservas automáticamente
         </CardDescription>
         <div className="grid grid-cols-1 gap-4 mt-4">
-          <Input
-            label="iCal Airbnb"
-            type="url"
-            value={formData.ical_airbnb}
-            onChange={(e) => setFormData({ ...formData, ical_airbnb: e.target.value })}
-            placeholder="https://www.airbnb.com/calendar/ical/..."
-          />
+          {/* Airbnb */}
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 mt-7 w-6 h-6 rounded-full overflow-hidden">
+              <Image
+                src="/images/airbnb_logo.jpeg"
+                alt="Airbnb"
+                width={128}
+                height={128}
+                className="w-full h-full object-cover scale-[1.3]"
+                unoptimized
+              />
+            </div>
+            <div className="flex-1">
+              <Input
+                label="iCal Airbnb"
+                type="url"
+                value={formData.ical_airbnb}
+                onChange={(e) => setFormData({ ...formData, ical_airbnb: e.target.value })}
+                placeholder="https://www.airbnb.com/calendar/ical/..."
+              />
+            </div>
+          </div>
 
-          <Input
-            label="iCal Booking.com"
-            type="url"
-            value={formData.ical_booking}
-            onChange={(e) => setFormData({ ...formData, ical_booking: e.target.value })}
-            placeholder="https://admin.booking.com/..."
-          />
+          {/* Booking.com */}
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 mt-7 w-6 h-6 rounded-full overflow-hidden">
+              <Image
+                src="/images/booking_logo.png"
+                alt="Booking.com"
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex-1">
+              <Input
+                label="iCal Booking.com"
+                type="url"
+                value={formData.ical_booking}
+                onChange={(e) => setFormData({ ...formData, ical_booking: e.target.value })}
+                placeholder="https://admin.booking.com/..."
+              />
+            </div>
+          </div>
 
-          <Input
-            label="iCal Otro (VRBO, etc.)"
-            type="url"
-            value={formData.ical_other}
-            onChange={(e) => setFormData({ ...formData, ical_other: e.target.value })}
-            placeholder="https://..."
-          />
+          {/* Otro */}
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 mt-7 w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
+              <span className="text-gray-400 text-xs font-medium">+</span>
+            </div>
+            <div className="flex-1">
+              <Input
+                label="iCal Otro (VRBO, etc.)"
+                type="url"
+                value={formData.ical_other}
+                onChange={(e) => setFormData({ ...formData, ical_other: e.target.value })}
+                placeholder="https://..."
+              />
+            </div>
+          </div>
         </div>
       </Card>
 

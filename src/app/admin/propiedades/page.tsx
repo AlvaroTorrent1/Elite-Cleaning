@@ -61,29 +61,25 @@ export default async function PropertiesPage({
           title="Total Propiedades"
           value={totalProperties || 0}
           icon={Building}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
         <StatCard
           title="Ciudades"
           value={uniqueCities.length}
           icon={MapPin}
-          iconColor="text-blue-600"
-          iconBgColor="bg-blue-50"
+          variant="secondary"
         />
         <StatCard
           title="Con iCal"
           value={withIcal}
           icon={Link2}
-          iconColor="text-green-600"
-          iconBgColor="bg-green-50"
+          variant="accent3"
         />
         <StatCard
           title="Sin iCal"
           value={withoutIcal}
           icon={LinkIcon}
-          iconColor="text-orange-600"
-          iconBgColor="bg-orange-50"
+          variant="accent4"
         />
       </StatCardGrid>
 

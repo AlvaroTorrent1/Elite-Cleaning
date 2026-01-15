@@ -5,6 +5,13 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import { Button, Badge, Card } from '@/components/ui'
+
+/**
+ * LostItemCard - Tarjeta de objeto perdido para PM
+ * 
+ * Usa la paleta corporativa rosa/lila
+ */
 
 interface LostItemCardProps {
   report: any
@@ -36,16 +43,16 @@ export default function LostItemCard({ report }: LostItemCardProps) {
   }
 
   return (
-    <div
-      className={`bg-white rounded-lg border-2 ${report.acknowledged_by_pm ? 'border-[#E5E7EB]' : 'border-[#F59E0B]'} p-6`}
+    <Card
+      className={`border-2 ${report.acknowledged_by_pm ? 'border-border' : 'border-secondary'}`}
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Image */}
-        <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
+        <div className="relative w-full h-48 bg-muted rounded-lg overflow-hidden">
           {report.image_url ? (
             <Image src={report.image_url} alt="Objeto perdido" fill className="object-cover" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-[#6B7280]">
+            <div className="w-full h-full flex items-center justify-center text-muted-foreground">
               Sin imagen
             </div>
           )}
@@ -55,30 +62,30 @@ export default function LostItemCard({ report }: LostItemCardProps) {
         <div className="md:col-span-2 space-y-4">
           {/* Status Badge */}
           {!report.acknowledged_by_pm && (
-            <span className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-[#F59E0B] text-white">
+            <Badge variant="secondary">
               🔔 Sin Revisar
-            </span>
+            </Badge>
           )}
 
           {/* Property */}
           <div className="flex items-start gap-2">
-            <MapPin className="w-4 h-4 text-[#6B7280] mt-1 flex-shrink-0" />
+            <MapPin className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
             <div>
-              <p className="font-semibold text-[#111827]">
+              <p className="font-semibold text-foreground">
                 {report.cleaning?.property?.name || 'Sin propiedad'}
               </p>
-              <p className="text-sm text-[#6B7280]">{report.cleaning?.property?.address}</p>
+              <p className="text-sm text-muted-foreground">{report.cleaning?.property?.address}</p>
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <p className="text-sm text-[#6B7280] mb-1">Descripción del Objeto</p>
-            <p className="text-[#111827]">{report.description}</p>
+            <p className="text-sm text-muted-foreground mb-1">Descripción del Objeto</p>
+            <p className="text-foreground">{report.description}</p>
           </div>
 
           {/* Meta */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="w-4 h-4" />
               <span>
@@ -93,17 +100,16 @@ export default function LostItemCard({ report }: LostItemCardProps) {
 
           {/* Action */}
           {!report.acknowledged_by_pm && (
-            <button
+            <Button
               onClick={handleAcknowledge}
-              disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 bg-[#10B981] hover:bg-[#059669] text-white rounded-lg transition-colors disabled:opacity-50"
+              loading={loading}
+              leftIcon={<Check className="w-4 h-4" />}
             >
-              <Check className="w-4 h-4" />
               Marcar como Revisado
-            </button>
+            </Button>
           )}
         </div>
       </div>
-    </div>
+    </Card>
   )
 }

@@ -3,6 +3,13 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Calendar, X } from 'lucide-react'
 import { useState } from 'react'
+import { Card, Select, Button } from '@/components/ui'
+
+/**
+ * PMCleaningsFilters - Filtros de limpiezas para PM
+ * 
+ * Usa la paleta corporativa rosa/lila
+ */
 
 interface PMCleaningsFiltersProps {
   currentFilters: {
@@ -43,26 +50,33 @@ export default function PMCleaningsFilters({
 
   const hasFilters = currentFilters.status || currentFilters.date || currentFilters.property
 
+  const statusOptions = [
+    { value: '', label: 'Todos los estados' },
+    { value: 'pending', label: 'Pendiente' },
+    { value: 'assigned', label: 'Asignada' },
+    { value: 'in_progress', label: 'En Curso' },
+    { value: 'completed', label: 'Completada' },
+    { value: 'cancelled', label: 'Cancelada' },
+  ]
+
+  const propertyOptions = [
+    { value: '', label: 'Todas las propiedades' },
+    ...properties.map((p) => ({ value: p.id, label: p.name })),
+  ]
+
   return (
-    <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
+    <Card>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Status Filter */}
-        <select
+        <Select
           value={currentFilters.status || ''}
           onChange={(e) => handleFilterChange('status', e.target.value)}
-          className="px-4 py-2 border border-[#E5E7EB] rounded-lg focus:ring-2 focus:ring-[#1E40AF] focus:border-transparent text-[#111827]"
-        >
-          <option value="">Todos los estados</option>
-          <option value="pending">Pendiente</option>
-          <option value="assigned">Asignada</option>
-          <option value="in_progress">En Curso</option>
-          <option value="completed">Completada</option>
-          <option value="cancelled">Cancelada</option>
-        </select>
+          options={statusOptions}
+        />
 
         {/* Date Filter */}
         <div className="relative">
-          <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6B7280] pointer-events-none" />
+          <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
           <input
             type="date"
             value={date}
@@ -70,35 +84,28 @@ export default function PMCleaningsFilters({
               setDate(e.target.value)
               handleFilterChange('date', e.target.value)
             }}
-            className="w-full pl-10 pr-4 py-2 border border-[#E5E7EB] rounded-lg focus:ring-2 focus:ring-[#1E40AF] focus:border-transparent text-[#111827]"
+            className="w-full pl-10 pr-4 py-2 border border-input bg-background rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-foreground transition-colors"
           />
         </div>
 
         {/* Property Filter */}
-        <select
+        <Select
           value={currentFilters.property || ''}
           onChange={(e) => handleFilterChange('property', e.target.value)}
-          className="px-4 py-2 border border-[#E5E7EB] rounded-lg focus:ring-2 focus:ring-[#1E40AF] focus:border-transparent text-[#111827]"
-        >
-          <option value="">Todas las propiedades</option>
-          {properties.map((property) => (
-            <option key={property.id} value={property.id}>
-              {property.name}
-            </option>
-          ))}
-        </select>
+          options={propertyOptions}
+        />
 
         {/* Clear Filters */}
         {hasFilters && (
-          <button
+          <Button
             onClick={clearFilters}
-            className="flex items-center justify-center gap-2 px-4 py-2 text-[#6B7280] bg-[#F9FAFB] hover:bg-[#E5E7EB] rounded-lg transition-colors"
+            variant="muted"
+            leftIcon={<X className="w-4 h-4" />}
           >
-            <X className="w-4 h-4" />
             Limpiar
-          </button>
+          </Button>
         )}
       </div>
-    </div>
+    </Card>
   )
 }

@@ -71,22 +71,19 @@ export default async function LostItemsPage({
           title="Total"
           value={totalItems || 0}
           icon={Package}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
         <StatCard
           title="Pendientes"
           value={pendingItems || 0}
           icon={Clock}
-          iconColor="text-orange-600"
-          iconBgColor="bg-orange-50"
+          variant="accent4"
         />
         <StatCard
           title="Revisados"
           value={reviewedItems || 0}
           icon={CheckCircle}
-          iconColor="text-green-600"
-          iconBgColor="bg-green-50"
+          variant="accent3"
         />
       </StatCardGrid>
 
@@ -95,7 +92,7 @@ export default async function LostItemsPage({
         <div className="flex gap-2">
           {filterButtons.map((btn) => (
             <a key={btn.href} href={btn.href}>
-              <Button variant={btn.active ? 'primary' : 'secondary'} size="sm">
+              <Button variant={btn.active ? 'primary' : 'muted'} size="sm">
                 {btn.label}
               </Button>
             </a>

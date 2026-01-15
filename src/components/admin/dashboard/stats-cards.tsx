@@ -7,6 +7,14 @@ import {
   UserCheck,
   AlertTriangle,
 } from 'lucide-react'
+import { StatCard, StatCardGrid, IconVariant } from '@/components/ui'
+
+/**
+ * StatsCards - Dashboard del Admin
+ * 
+ * Usa las variantes de iconos corporativos (rosa/lila)
+ * en lugar de colores variados.
+ */
 
 interface StatsCardsProps {
   stats: {
@@ -21,80 +29,68 @@ interface StatsCardsProps {
 }
 
 export default function StatsCards({ stats }: StatsCardsProps) {
-  const cards = [
+  // Definimos los stats usando variantes de la paleta corporativa
+  const cards: Array<{
+    name: string
+    value: number
+    icon: typeof Home
+    variant: IconVariant
+  }> = [
     {
       name: 'Propiedades',
       value: stats.totalProperties,
       icon: Home,
-      color: 'bg-blue-500',
-      bgColor: 'bg-blue-50',
+      variant: 'primary',    // Rosa principal
     },
     {
       name: 'Usuarios',
       value: stats.totalUsers,
       icon: Users,
-      color: 'bg-purple-500',
-      bgColor: 'bg-purple-50',
+      variant: 'secondary',  // Lila
     },
     {
       name: 'Limpiezas Totales',
       value: stats.totalCleanings,
       icon: Calendar,
-      color: 'bg-green-500',
-      bgColor: 'bg-green-50',
+      variant: 'accent1',    // Rosa oscuro
     },
     {
       name: 'Limpiezas Pendientes',
       value: stats.pendingCleanings,
       icon: Clock,
-      color: 'bg-yellow-500',
-      bgColor: 'bg-yellow-50',
+      variant: 'accent2',    // Lila claro
     },
     {
       name: 'Completadas Hoy',
       value: stats.completedToday,
       icon: CheckCircle,
-      color: 'bg-emerald-500',
-      bgColor: 'bg-emerald-50',
+      variant: 'accent3',    // Rosa suave
     },
     {
       name: 'PMs Pendientes Aprobación',
       value: stats.pendingApprovals,
       icon: UserCheck,
-      color: 'bg-orange-500',
-      bgColor: 'bg-orange-50',
+      variant: 'accent4',    // Lila profundo
     },
     {
       name: 'Daños Sin Resolver',
       value: stats.unresolvedDamages,
       icon: AlertTriangle,
-      color: 'bg-red-500',
-      bgColor: 'bg-red-50',
+      variant: 'accent5',    // Rosa intenso (para alertas)
     },
   ]
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {cards.map((card) => {
-        const Icon = card.icon
-
-        return (
-          <div
-            key={card.name}
-            className="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition-shadow"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">{card.name}</p>
-                <p className="text-3xl font-bold text-gray-900 mt-2">{card.value}</p>
-              </div>
-              <div className={`${card.bgColor} p-3 rounded-lg`}>
-                <Icon className={`w-6 h-6 ${card.color.replace('bg-', 'text-')}`} />
-              </div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
+    <StatCardGrid columns={4}>
+      {cards.map((card) => (
+        <StatCard
+          key={card.name}
+          title={card.name}
+          value={card.value}
+          icon={card.icon}
+          variant={card.variant}
+        />
+      ))}
+    </StatCardGrid>
   )
 }

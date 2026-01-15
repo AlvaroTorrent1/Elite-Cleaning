@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import NewCleaningForm from '@/components/pm/cleanings/new-cleaning-form'
-import { PlusCircle } from 'lucide-react'
+import { PageHeader, Card } from '@/components/ui'
 
 export default async function NewCleaningPage() {
   const supabase = await createClient()
@@ -31,25 +31,18 @@ export default async function NewCleaningPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-6">
-        <div className="flex items-center gap-3 mb-2">
-          <PlusCircle className="w-6 h-6 text-[#1E40AF]" />
-          <h1 className="text-2xl font-bold text-[#111827]">Solicitar Limpieza Manual</h1>
-        </div>
-        <p className="text-[#6B7280]">
-          Crea una limpieza puntual no vinculada a reservas de iCal
-        </p>
-      </div>
+      <PageHeader
+        title="Solicitar Limpieza Manual"
+        description="Crea una limpieza puntual no vinculada a reservas de iCal"
+      />
 
-      {/* Form */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-6">
+      <Card>
         <NewCleaningForm
           properties={properties || []}
           cleaningTypes={cleaningTypes || []}
           extras={extras || []}
         />
-      </div>
+      </Card>
     </div>
   )
 }

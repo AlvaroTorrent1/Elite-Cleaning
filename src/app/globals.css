@@ -2,82 +2,134 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Elite Cleaning - Sistema de Diseño
+ * 
+ * Paleta corporativa:
+ * - Blanco (#FFFFFF) como color base principal
+ * - Rosa malva (#D4A5B3) como color primario/acento
+ * - Lila (#8B7BA8) como color secundario
+ * 
+ * La app debe transmitir: limpieza, elegancia, profesionalismo
+ */
+
 @layer base {
   :root {
-    /* Colores adaptados a shadcn/ui usando la paleta de My Elite Cleaning */
-    /* Base blanca con rosa malva y lila como colores corporativos */
-    --background: 255 255 255;     /* #FFFFFF - Fondo blanco */
-    --foreground: 45 45 45;        /* #2D2D2D - Texto principal */
+    /* =========================
+       COLORES BASE
+       ========================= */
+    --background: 0 0% 100%;           /* #FFFFFF - Blanco puro */
+    --foreground: 0 0% 18%;            /* #2D2D2D - Texto principal */
     
-    --card: 250 250 250;           /* #FAFAFA - Tarjetas */
-    --card-foreground: 45 45 45;   /* #2D2D2D */
+    /* =========================
+       COMPONENTES
+       ========================= */
+    --card: 0 0% 99%;                  /* #FCFCFC - Tarjetas ligeramente off-white */
+    --card-foreground: 0 0% 18%;       /* #2D2D2D */
     
-    --popover: 255 255 255;        /* #FFFFFF */
-    --popover-foreground: 45 45 45; /* #2D2D2D */
+    --popover: 0 0% 100%;              /* #FFFFFF */
+    --popover-foreground: 0 0% 18%;    /* #2D2D2D */
     
-    --primary: 212 165 179;        /* #D4A5B3 - Rosa malva corporativo */
-    --primary-foreground: 255 255 255; /* Blanco */
+    /* =========================
+       COLORES CORPORATIVOS
+       ========================= */
+    /* Rosa malva - Color primario corporativo */
+    --primary: 345 38% 73%;            /* #D4A5B3 - Rosa malva */
+    --primary-foreground: 0 0% 100%;   /* Blanco */
     
-    --secondary: 139 123 168;      /* #8B7BA8 - Lila/púrpura */
-    --secondary-foreground: 255 255 255; /* Blanco */
+    /* Lila - Color secundario */
+    --secondary: 261 22% 57%;          /* #8B7BA8 - Lila/púrpura */
+    --secondary-foreground: 0 0% 100%; /* Blanco */
     
-    --muted: 245 245 245;          /* #F5F5F5 */
-    --muted-foreground: 107 114 128; /* #6B7280 */
+    /* =========================
+       ESTADOS Y NEUTROS
+       ========================= */
+    --muted: 0 0% 96%;                 /* #F5F5F5 - Gris muy claro */
+    --muted-foreground: 220 9% 46%;    /* #6B7280 - Gris medio */
     
-    --accent: 139 123 168;         /* #8B7BA8 - Lila para acentos */
-    --accent-foreground: 255 255 255; /* Blanco */
+    --accent: 345 38% 73%;             /* Rosa malva como acento */
+    --accent-foreground: 0 0% 100%;    /* Blanco */
     
-    --destructive: 239 68 68;      /* #EF4444 - Rojo */
-    --destructive-foreground: 255 255 255; /* Blanco */
+    /* =========================
+       SEMÁNTICOS
+       ========================= */
+    --destructive: 0 84% 60%;          /* #EF4444 - Rojo error */
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 229 231 235;         /* #E5E7EB */
-    --input: 229 231 235;          /* #E5E7EB */
-    --ring: 212 165 179;           /* #D4A5B3 - Rosa malva */
+    --success: 160 84% 39%;            /* #10B981 - Verde éxito */
+    --success-foreground: 0 0% 100%;
     
-    --radius: 0.5rem;              /* 8px - Radio estándar */
+    --warning: 38 92% 50%;             /* #F59E0B - Ámbar advertencia */
+    --warning-foreground: 0 0% 100%;
     
-    /* Colores para gráficos */
-    --chart-1: 212 165 179;        /* Rosa primary */
-    --chart-2: 139 123 168;        /* Lila secondary */
-    --chart-3: 16 185 129;         /* Verde success */
-    --chart-4: 245 158 11;         /* Ámbar warning */
-    --chart-5: 239 68 68;          /* Rojo error */
+    --info: 217 91% 60%;               /* #3B82F6 - Azul info */
+    --info-foreground: 0 0% 100%;
+    
+    /* =========================
+       BORDES E INPUTS
+       ========================= */
+    --border: 220 13% 91%;             /* #E5E7EB - Borde sutil */
+    --input: 220 13% 91%;              /* #E5E7EB */
+    --ring: 345 38% 73%;               /* Rosa malva para focus */
+    
+    /* =========================
+       CONFIGURACIÓN
+       ========================= */
+    --radius: 0.5rem;                  /* 8px - Radio estándar */
+    
+    /* =========================
+       COLORES PARA GRÁFICOS
+       ========================= */
+    --chart-1: 345 38% 73%;            /* Rosa primary */
+    --chart-2: 261 22% 57%;            /* Lila secondary */
+    --chart-3: 160 84% 39%;            /* Verde success */
+    --chart-4: 38 92% 50%;             /* Ámbar warning */
+    --chart-5: 0 84% 60%;              /* Rojo destructive */
+    
+    /* =========================
+       ESCALAS DE ROSA (brand)
+       ========================= */
+    --pink-50: 345 60% 97%;
+    --pink-100: 345 55% 93%;
+    --pink-200: 345 50% 86%;
+    --pink-300: 345 45% 76%;
+    --pink-400: 345 40% 68%;
+    --pink-500: 345 38% 73%;           /* Principal */
+    --pink-600: 345 35% 58%;
+    --pink-700: 345 30% 48%;
+    --pink-800: 345 28% 38%;
+    --pink-900: 345 25% 30%;
   }
 
+  /* Dark mode (futuro, mantenemos por compatibilidad) */
   .dark {
-    --background: 17 24 39;        /* #111827 */
-    --foreground: 249 250 251;     /* #F9FAFB */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
     
-    --card: 31 41 55;              /* #1F2937 */
-    --card-foreground: 249 250 251; /* #F9FAFB */
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
     
-    --popover: 31 41 55;           /* #1F2937 */
-    --popover-foreground: 249 250 251; /* #F9FAFB */
+    --popover: 222 47% 14%;
+    --popover-foreground: 210 40% 98%;
     
-    --primary: 232 212 220;        /* #E8D4DC - Rosa claro para dark mode */
-    --primary-foreground: 45 45 45; /* #2D2D2D */
+    --primary: 345 45% 78%;
+    --primary-foreground: 222 47% 11%;
     
-    --secondary: 168 157 196;      /* #A89DC4 - Lila claro */
-    --secondary-foreground: 45 45 45; /* #2D2D2D */
+    --secondary: 261 28% 68%;
+    --secondary-foreground: 222 47% 11%;
     
-    --muted: 55 65 81;             /* #374151 */
-    --muted-foreground: 209 213 219; /* #D1D5DB */
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
     
-    --accent: 168 157 196;         /* #A89DC4 - Lila claro */
-    --accent-foreground: 45 45 45; /* #2D2D2D */
+    --accent: 345 45% 78%;
+    --accent-foreground: 222 47% 11%;
     
-    --destructive: 239 68 68;      /* #EF4444 */
-    --destructive-foreground: 249 250 251; /* #F9FAFB */
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 210 40% 98%;
     
-    --border: 55 65 81;            /* #374151 */
-    --input: 55 65 81;             /* #374151 */
-    --ring: 232 212 220;           /* #E8D4DC - Rosa claro */
-    
-    --chart-1: 232 212 220;        /* Rosa claro */
-    --chart-2: 168 157 196;        /* Lila claro */
-    --chart-3: 16 185 129;         /* Verde */
-    --chart-4: 245 158 11;         /* Ámbar */
-    --chart-5: 239 68 68;          /* Rojo */
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 345 45% 78%;
   }
 }
 
@@ -87,35 +139,29 @@
   }
   
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-sans);
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
   
   /* Tipografía mejorada */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    @apply font-semibold tracking-tight text-foreground;
   }
   
-  h1 {
-    @apply text-4xl;
+  h1 { @apply text-3xl md:text-4xl; }
+  h2 { @apply text-2xl md:text-3xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
+  
+  /* Links */
+  a {
+    @apply transition-colors;
   }
   
-  h2 {
-    @apply text-3xl;
-  }
-  
-  h3 {
-    @apply text-2xl;
-  }
-  
-  h4 {
-    @apply text-xl;
-  }
-  
-  /* Scrollbar personalizado para toda la aplicación */
+  /* Scrollbar personalizado */
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgb(var(--border)) rgb(var(--background));
+    scrollbar-color: hsl(var(--border)) hsl(var(--background));
   }
   
   *::-webkit-scrollbar {
@@ -124,15 +170,53 @@
   }
   
   *::-webkit-scrollbar-track {
-    background: rgb(var(--background));
+    background: hsl(var(--background));
   }
   
   *::-webkit-scrollbar-thumb {
-    background: rgb(var(--border));
+    background: hsl(var(--border));
     border-radius: 9999px;
   }
   
   *::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--divider));
+    background: hsl(var(--muted-foreground) / 0.3);
+  }
+}
+
+/* =========================
+   UTILIDADES PERSONALIZADAS
+   ========================= */
+@layer utilities {
+  /* Gradientes con colores corporativos */
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+  }
+  
+  .bg-gradient-brand-light {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, hsl(var(--secondary) / 0.1) 100%);
+  }
+  
+  /* Sombras con tinte rosa */
+  .shadow-brand {
+    box-shadow: 0 4px 14px 0 hsl(var(--primary) / 0.15);
+  }
+  
+  .shadow-brand-lg {
+    box-shadow: 0 10px 40px 0 hsl(var(--primary) / 0.2);
+  }
+  
+  /* Focus ring consistente */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary;
+  }
+  
+  /* Animación suave para hover */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:-translate-y-0.5;
+  }
+  
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-sm;
   }
 }

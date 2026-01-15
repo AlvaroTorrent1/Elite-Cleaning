@@ -1,8 +1,17 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
+import { useState, ReactNode, createContext, useContext } from 'react'
 import { MoreVertical } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+
+/**
+ * DropdownMenu Component - Elite Cleaning
+ * 
+ * Usa colores del tema para consistencia
+ */
+
+// Context for closing menu from items
+const DropdownMenuContext = createContext<{ close: () => void }>({ close: () => {} })
 
 interface DropdownMenuProps {
   trigger?: ReactNode
@@ -29,11 +38,11 @@ function DropdownMenu({
       <button
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="p-2 hover:bg-muted rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        {trigger || <MoreVertical className="w-5 h-5 text-gray-600" />}
+        {trigger || <MoreVertical className="w-5 h-5 text-muted-foreground" />}
       </button>
 
       {/* Dropdown */}
@@ -49,7 +58,7 @@ function DropdownMenu({
           {/* Menu */}
           <div
             className={cn(
-              'absolute mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-20 py-1',
+              'absolute mt-2 w-48 bg-card rounded-lg shadow-lg border border-border z-20 py-1 animate-fade-in',
               align === 'right' ? 'right-0' : 'left-0'
             )}
             role="menu"
@@ -64,11 +73,6 @@ function DropdownMenu({
     </div>
   )
 }
-
-// Context for closing menu from items
-import { createContext, useContext } from 'react'
-
-const DropdownMenuContext = createContext<{ close: () => void }>({ close: () => {} })
 
 interface DropdownMenuItemProps {
   children: ReactNode
@@ -103,8 +107,8 @@ function DropdownMenuItem({
       disabled={disabled}
       className={cn(
         'w-full flex items-center gap-2 px-4 py-2 text-sm text-left transition-colors',
-        variant === 'default' && 'text-gray-700 hover:bg-gray-50',
-        variant === 'danger' && 'text-red-600 hover:bg-red-50',
+        variant === 'default' && 'text-foreground hover:bg-muted',
+        variant === 'danger' && 'text-destructive hover:bg-destructive/10',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
@@ -131,7 +135,7 @@ function DropdownMenuLink({ children, href, icon, className }: DropdownMenuLinkP
       href={href}
       onClick={close}
       className={cn(
-        'w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors',
+        'w-full flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors',
         className
       )}
       role="menuitem"
@@ -143,7 +147,7 @@ function DropdownMenuLink({ children, href, icon, className }: DropdownMenuLinkP
 }
 
 function DropdownMenuDivider() {
-  return <div className="border-t border-gray-100 my-1" role="separator" />
+  return <div className="border-t border-border my-1" role="separator" />
 }
 
 export { DropdownMenu, DropdownMenuItem, DropdownMenuLink, DropdownMenuDivider }

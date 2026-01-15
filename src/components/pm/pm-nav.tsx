@@ -2,8 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Calendar, AlertTriangle, Package, History, PlusCircle } from 'lucide-react'
+import { Home, Calendar, AlertTriangle, Package, History, PlusCircle, MessageCircle } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+
+/**
+ * PMNav - Navegación del panel de Property Manager
+ * 
+ * Usa la paleta corporativa rosa/lila
+ */
 
 const navigation = [
   {
@@ -15,6 +21,11 @@ const navigation = [
     name: 'Limpiezas',
     href: '/pm/limpiezas',
     icon: Calendar,
+  },
+  {
+    name: 'Mensajes',
+    href: '/pm/mensajes',
+    icon: MessageCircle,
   },
   {
     name: 'Daños',
@@ -36,13 +47,18 @@ const navigation = [
     href: '/pm/nueva-limpieza',
     icon: PlusCircle,
   },
+  {
+    name: 'Nueva Propiedad',
+    href: '/pm/nueva-propiedad',
+    icon: PlusCircle,
+  },
 ]
 
 export default function PMNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="bg-white border-b border-[#E5E7EB] overflow-x-auto">
+    <nav className="bg-card border-b border-border overflow-x-auto">
       <div className="flex gap-1 p-2">
         {navigation.map((item) => {
           const Icon = item.icon
@@ -55,8 +71,8 @@ export default function PMNav() {
               className={cn(
                 'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap',
                 isActive
-                  ? 'bg-[#1E40AF] text-white'
-                  : 'text-[#6B7280] hover:bg-[#F9FAFB] hover:text-[#111827]'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               )}
             >
               <Icon className="w-4 h-4" />

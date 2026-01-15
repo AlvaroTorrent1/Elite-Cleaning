@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Calendar as CalendarIcon } from 'lucide-react'
 import PMCleaningsFilters from '@/components/pm/cleanings/pm-cleanings-filters'
 import PMCleaningsList from '@/components/pm/cleanings/pm-cleanings-list'
+import { PageHeader, Card, EmptyState } from '@/components/ui'
 
 export default async function PMCleaningsPage({
   searchParams,
@@ -30,10 +31,13 @@ export default async function PMCleaningsPage({
 
   if (propertyIds.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-12 text-center">
-        <CalendarIcon className="w-12 h-12 text-[#E5E7EB] mx-auto mb-3" />
-        <p className="text-[#6B7280]">No tienes propiedades asignadas</p>
-      </div>
+      <Card className="text-center py-12">
+        <EmptyState
+          icon={CalendarIcon}
+          title="No tienes propiedades asignadas"
+          description="Contacta con el administrador para que te asigne propiedades"
+        />
+      </Card>
     )
   }
 
@@ -44,7 +48,7 @@ export default async function PMCleaningsPage({
       `
       *,
       property:properties(id, name, address),
-      cleaner:profiles!cleanings_assigned_to_fkey(id, full_name),
+      cleaner:profiles!cleanings_cleaner_id_fkey(id, full_name),
       cleaning_type:cleaning_types(name)
     `,
       { count: 'exact' }
@@ -69,19 +73,18 @@ export default async function PMCleaningsPage({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-[#111827]">Limpiezas Programadas</h1>
-        <p className="text-[#6B7280]">Gestiona las limpiezas de tus propiedades</p>
-      </div>
+      <PageHeader
+        title="Limpiezas Programadas"
+        description="Gestiona las limpiezas de tus propiedades"
+      />
 
       {/* Filters */}
       <PMCleaningsFilters currentFilters={params} properties={properties || []} />
 
       {/* List */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB]">
+      <Card padding="none">
         <PMCleaningsList cleanings={cleanings || []} total={count || 0} />
-      </div>
+      </Card>
     </div>
   )
 }

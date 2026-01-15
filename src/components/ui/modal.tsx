@@ -4,6 +4,12 @@ import { Fragment, ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
+/**
+ * Modal Component - Elite Cleaning
+ * 
+ * Usa colores del tema para consistencia
+ */
+
 interface ModalProps {
   isOpen: boolean
   onClose: () => void
@@ -35,7 +41,7 @@ function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black/50 transition-opacity"
+        className="fixed inset-0 bg-foreground/50 backdrop-blur-sm transition-opacity"
         onClick={closeOnOverlayClick ? onClose : undefined}
         aria-hidden="true"
       />
@@ -44,7 +50,7 @@ function Modal({
       <div className="flex min-h-full items-center justify-center p-4">
         <div
           className={cn(
-            'relative bg-white rounded-xl shadow-xl w-full transform transition-all',
+            'relative bg-card rounded-xl shadow-xl w-full transform transition-all animate-fade-in border border-border',
             sizeClasses[size],
             className
           )}
@@ -65,15 +71,15 @@ interface ModalHeaderProps {
 
 function ModalHeader({ children, onClose, className }: ModalHeaderProps) {
   return (
-    <div className={cn('flex items-center justify-between p-4 border-b border-gray-200', className)}>
-      <h2 className="text-lg font-semibold text-gray-900">{children}</h2>
+    <div className={cn('flex items-center justify-between p-4 border-b border-border', className)}>
+      <h2 className="text-lg font-semibold text-foreground">{children}</h2>
       {onClose && (
         <button
           onClick={onClose}
-          className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-1 hover:bg-muted rounded-lg transition-colors"
           aria-label="Cerrar"
         >
-          <X className="w-5 h-5 text-gray-500" />
+          <X className="w-5 h-5 text-muted-foreground" />
         </button>
       )}
     </div>
@@ -96,7 +102,7 @@ interface ModalFooterProps {
 
 function ModalFooter({ children, className }: ModalFooterProps) {
   return (
-    <div className={cn('flex gap-3 p-4 border-t border-gray-200', className)}>
+    <div className={cn('flex gap-3 p-4 border-t border-border', className)}>
       {children}
     </div>
   )

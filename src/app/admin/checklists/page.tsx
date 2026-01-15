@@ -46,22 +46,19 @@ export default async function ChecklistsPage() {
           title="Templates"
           value={count || 0}
           icon={FileText}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
         <StatCard
           title="Total Items"
           value={totalItems}
           icon={CheckSquare}
-          iconColor="text-blue-600"
-          iconBgColor="bg-blue-50"
+          variant="secondary"
         />
         <StatCard
           title="Promedio Items"
           value={avgItems}
           icon={BarChart}
-          iconColor="text-green-600"
-          iconBgColor="bg-green-50"
+          variant="accent3"
         />
       </StatCardGrid>
 

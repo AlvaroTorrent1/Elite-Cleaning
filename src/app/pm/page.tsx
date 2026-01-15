@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Home, Calendar, AlertTriangle, Package, Plus } from 'lucide-react'
 import Link from 'next/link'
 import PropertyCard from '@/components/pm/property-card'
+import { StatCard, StatCardGrid, Card } from '@/components/ui'
 
 export default async function PMDashboard() {
   const supabase = await createClient()
@@ -61,56 +62,41 @@ export default async function PMDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-[#6B7280]">Propiedades</p>
-              <p className="text-2xl font-bold text-[#1E40AF]">{properties?.length || 0}</p>
-            </div>
-            <Home className="w-8 h-8 text-[#3B82F6]" />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-[#6B7280]">Limpiezas Próximas</p>
-              <p className="text-2xl font-bold text-[#10B981]">{upcomingCleanings || 0}</p>
-            </div>
-            <Calendar className="w-8 h-8 text-[#10B981]" />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-[#6B7280]">Daños Pendientes</p>
-              <p className="text-2xl font-bold text-[#EF4444]">{pendingDamages || 0}</p>
-            </div>
-            <AlertTriangle className="w-8 h-8 text-[#EF4444]" />
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-[#6B7280]">Objetos Perdidos</p>
-              <p className="text-2xl font-bold text-[#F59E0B]">{lostItems || 0}</p>
-            </div>
-            <Package className="w-8 h-8 text-[#F59E0B]" />
-          </div>
-        </div>
-      </div>
+      {/* Stats - Usando paleta corporativa */}
+      <StatCardGrid columns={4}>
+        <StatCard
+          title="Propiedades"
+          value={properties?.length || 0}
+          icon={Home}
+          variant="primary"
+        />
+        <StatCard
+          title="Limpiezas Próximas"
+          value={upcomingCleanings || 0}
+          icon={Calendar}
+          variant="secondary"
+        />
+        <StatCard
+          title="Daños Pendientes"
+          value={pendingDamages || 0}
+          icon={AlertTriangle}
+          variant="accent5"
+        />
+        <StatCard
+          title="Objetos Perdidos"
+          value={lostItems || 0}
+          icon={Package}
+          variant="accent4"
+        />
+      </StatCardGrid>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-6">
-        <h2 className="text-lg font-semibold text-[#111827] mb-4">Acciones Rápidas</h2>
+      <Card>
+        <h2 className="text-lg font-semibold text-foreground mb-4">Acciones Rápidas</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Link
             href="/pm/nueva-limpieza"
-            className="flex items-center gap-3 p-4 border-2 border-[#1E40AF] bg-[#1E40AF] hover:bg-[#1E3A8A] text-white rounded-lg transition-colors"
+            className="flex items-center gap-3 p-4 border-2 border-primary bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-colors"
           >
             <Plus className="w-6 h-6" />
             <div>
@@ -121,42 +107,56 @@ export default async function PMDashboard() {
 
           <Link
             href="/pm/limpiezas"
-            className="flex items-center gap-3 p-4 border-2 border-[#E5E7EB] hover:border-[#1E40AF] hover:bg-[#F9FAFB] rounded-lg transition-colors"
+            className="flex items-center gap-3 p-4 border-2 border-border hover:border-secondary hover:bg-secondary/5 rounded-lg transition-colors"
           >
-            <Calendar className="w-6 h-6 text-[#1E40AF]" />
+            <Calendar className="w-6 h-6 text-secondary" />
             <div>
-              <p className="font-semibold text-[#111827]">Ver Limpiezas</p>
-              <p className="text-sm text-[#6B7280]">Próximas y en curso</p>
+              <p className="font-semibold text-foreground">Ver Limpiezas</p>
+              <p className="text-sm text-muted-foreground">Próximas y en curso</p>
             </div>
           </Link>
 
           <Link
             href="/pm/danos"
-            className="flex items-center gap-3 p-4 border-2 border-[#E5E7EB] hover:border-[#EF4444] hover:bg-red-50 rounded-lg transition-colors"
+            className="flex items-center gap-3 p-4 border-2 border-border hover:border-primary hover:bg-primary/5 rounded-lg transition-colors"
           >
-            <AlertTriangle className="w-6 h-6 text-[#EF4444]" />
+            <AlertTriangle className="w-6 h-6 text-primary" />
             <div>
-              <p className="font-semibold text-[#111827]">Ver Daños</p>
-              <p className="text-sm text-[#6B7280]">Reportes pendientes</p>
+              <p className="font-semibold text-foreground">Ver Daños</p>
+              <p className="text-sm text-muted-foreground">Reportes pendientes</p>
             </div>
           </Link>
         </div>
-      </div>
+      </Card>
 
       {/* Properties List */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-6">
+      <Card>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-[#111827]">Mis Propiedades</h2>
-          <span className="text-sm text-[#6B7280]">{properties?.length || 0} propiedades</span>
+          <h2 className="text-lg font-semibold text-foreground">Mis Propiedades</h2>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground">{properties?.length || 0} propiedades</span>
+            <Link href="/pm/nueva-propiedad">
+              <button className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                <Plus className="w-4 h-4" />
+                Nueva
+              </button>
+            </Link>
+          </div>
         </div>
 
         {!properties || properties.length === 0 ? (
           <div className="text-center py-12">
-            <Home className="w-12 h-12 text-[#E5E7EB] mx-auto mb-3" />
-            <p className="text-[#6B7280]">No tienes propiedades asignadas aún</p>
-            <p className="text-sm text-[#6B7280] mt-1">
-              Contacta con el administrador para que te asigne propiedades
+            <Home className="w-12 h-12 text-muted mx-auto mb-3" />
+            <p className="text-muted-foreground">No tienes propiedades asignadas aún</p>
+            <p className="text-sm text-muted-foreground mt-1 mb-4">
+              Añade tu primera propiedad para empezar
             </p>
+            <Link href="/pm/nueva-propiedad">
+              <button className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+                <Plus className="w-4 h-4" />
+                Añadir Propiedad
+              </button>
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -165,7 +165,7 @@ export default async function PMDashboard() {
             ))}
           </div>
         )}
-      </div>
+      </Card>
     </div>
   )
 }

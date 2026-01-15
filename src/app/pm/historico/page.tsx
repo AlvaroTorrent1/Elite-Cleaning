@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
-import { History as HistoryIcon, Calendar, Download } from 'lucide-react'
+import { History as HistoryIcon, Calendar, Download, CheckCircle, XCircle, BarChart } from 'lucide-react'
 import { CleaningStatusBadge } from '@/components/features/cleaning/cleaning-status-badge'
+import { PageHeader, StatCard, StatCardGrid, Card, Button, EmptyState } from '@/components/ui'
 
 export default async function PMHistoricoPage() {
   const supabase = await createClient()
@@ -23,10 +24,13 @@ export default async function PMHistoricoPage() {
 
   if (propertyIds.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-12 text-center">
-        <HistoryIcon className="w-12 h-12 text-[#E5E7EB] mx-auto mb-3" />
-        <p className="text-[#6B7280]">No tienes propiedades asignadas</p>
-      </div>
+      <Card className="text-center py-12">
+        <EmptyState
+          icon={HistoryIcon}
+          title="No tienes propiedades asignadas"
+          description="Contacta con el administrador para que te asigne propiedades"
+        />
+      </Card>
     )
   }
 
@@ -40,7 +44,7 @@ export default async function PMHistoricoPage() {
       `
       *,
       property:properties(id, name, address),
-      cleaner:profiles!cleanings_assigned_to_fkey(id, full_name),
+      cleaner:profiles!cleanings_cleaner_id_fkey(id, full_name),
       cleaning_type:cleaning_types(name)
     `,
       { count: 'exact' }
@@ -52,74 +56,80 @@ export default async function PMHistoricoPage() {
   // Calcular estadísticas
   const completedCount = cleanings?.filter((c) => c.status === 'completed').length || 0
   const cancelledCount = cleanings?.filter((c) => c.status === 'cancelled').length || 0
+  const completionRate = count && count > 0 ? Math.round((completedCount / count) * 100) : 0
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-6">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-3">
-            <HistoryIcon className="w-6 h-6 text-[#1E40AF]" />
-            <h1 className="text-2xl font-bold text-[#111827]">Histórico de Limpiezas</h1>
-          </div>
-          <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#1E40AF] border border-[#1E40AF] hover:bg-[#F9FAFB] rounded-lg transition-colors">
-            <Download className="w-4 h-4" />
+      <PageHeader
+        title="Histórico de Limpiezas"
+        description="Limpiezas de los últimos 30 días"
+        action={
+          <Button variant="outline" leftIcon={<Download className="w-4 h-4" />}>
             Exportar
-          </button>
-        </div>
-        <p className="text-[#6B7280]">Limpiezas de los últimos 30 días</p>
-      </div>
+          </Button>
+        }
+      />
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Total</p>
-          <p className="text-2xl font-bold text-[#111827]">{count || 0}</p>
-        </div>
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Completadas</p>
-          <p className="text-2xl font-bold text-[#10B981]">{completedCount}</p>
-        </div>
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Canceladas</p>
-          <p className="text-2xl font-bold text-[#EF4444]">{cancelledCount}</p>
-        </div>
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Tasa Completado</p>
-          <p className="text-2xl font-bold text-[#1E40AF]">
-            {count && count > 0 ? Math.round((completedCount / count) * 100) : 0}%
-          </p>
-        </div>
-      </div>
+      <StatCardGrid columns={4}>
+        <StatCard
+          title="Total"
+          value={count || 0}
+          icon={Calendar}
+          variant="primary"
+        />
+        <StatCard
+          title="Completadas"
+          value={completedCount}
+          icon={CheckCircle}
+          variant="accent3"
+        />
+        <StatCard
+          title="Canceladas"
+          value={cancelledCount}
+          icon={XCircle}
+          variant="accent5"
+        />
+        <StatCard
+          title="Tasa Completado"
+          value={`${completionRate}%`}
+          icon={BarChart}
+          variant="secondary"
+        />
+      </StatCardGrid>
 
       {/* Timeline */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB]">
-        <div className="px-6 py-3 border-b border-[#E5E7EB]">
-          <p className="text-sm text-[#6B7280]">
-            Mostrando <span className="font-medium">{cleanings?.length || 0}</span> limpiezas
+      <Card padding="none">
+        <div className="px-6 py-3 border-b border-border">
+          <p className="text-sm text-muted-foreground">
+            Mostrando <span className="font-medium text-foreground">{cleanings?.length || 0}</span> limpiezas
           </p>
         </div>
 
-        <div className="divide-y divide-[#E5E7EB]">
+        <div className="divide-y divide-border">
           {!cleanings || cleanings.length === 0 ? (
-            <div className="px-6 py-12 text-center text-[#6B7280]">
-              No hay limpiezas en el histórico
+            <div className="px-6 py-12 text-center">
+              <EmptyState
+                icon={HistoryIcon}
+                title="No hay limpiezas en el histórico"
+                description="Las limpiezas completadas aparecerán aquí"
+              />
             </div>
           ) : (
             cleanings.map((cleaning) => (
-              <div key={cleaning.id} className="px-6 py-4 hover:bg-[#F9FAFB]">
+              <div key={cleaning.id} className="px-6 py-4 hover:bg-muted/30 transition-colors">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 space-y-2">
                     {/* Property */}
                     <div>
-                      <p className="font-semibold text-[#111827]">
+                      <p className="font-semibold text-foreground">
                         {cleaning.property?.name || 'Sin propiedad'}
                       </p>
-                      <p className="text-sm text-[#6B7280]">{cleaning.property?.address}</p>
+                      <p className="text-sm text-muted-foreground">{cleaning.property?.address}</p>
                     </div>
 
                     {/* Details */}
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         <span>
@@ -137,7 +147,7 @@ export default async function PMHistoricoPage() {
                         Por: {cleaning.cleaner?.full_name || 'Sin asignar'}
                       </span>
                       {cleaning.completed_at && (
-                        <span className="text-[#10B981]">
+                        <span className="text-primary">
                           ✓ Completada:{' '}
                           {new Date(cleaning.completed_at).toLocaleDateString('es-ES')}
                         </span>
@@ -146,7 +156,7 @@ export default async function PMHistoricoPage() {
 
                     {/* Notes if any */}
                     {cleaning.notes && (
-                      <p className="text-sm text-[#6B7280] italic">
+                      <p className="text-sm text-muted-foreground italic">
                         Notas: {cleaning.notes}
                       </p>
                     )}
@@ -159,7 +169,7 @@ export default async function PMHistoricoPage() {
             ))
           )}
         </div>
-      </div>
+      </Card>
     </div>
   )
 }

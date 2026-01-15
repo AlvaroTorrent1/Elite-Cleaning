@@ -5,6 +5,13 @@ import { CleaningStatusBadge } from '@/components/features/cleaning/cleaning-sta
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { Button, EmptyState } from '@/components/ui'
+
+/**
+ * PMCleaningsList - Lista de limpiezas para PM
+ * 
+ * Usa la paleta corporativa rosa/lila
+ */
 
 interface PMCleaningsListProps {
   cleanings: any[]
@@ -52,37 +59,41 @@ export default function PMCleaningsList({ cleanings, total }: PMCleaningsListPro
   return (
     <div>
       {/* Header */}
-      <div className="px-6 py-3 border-b border-[#E5E7EB]">
-        <p className="text-sm text-[#6B7280]">
-          Mostrando <span className="font-medium">{cleanings.length}</span> de{' '}
-          <span className="font-medium">{total}</span> limpiezas
+      <div className="px-6 py-3 border-b border-border">
+        <p className="text-sm text-muted-foreground">
+          Mostrando <span className="font-medium text-foreground">{cleanings.length}</span> de{' '}
+          <span className="font-medium text-foreground">{total}</span> limpiezas
         </p>
       </div>
 
       {/* List */}
-      <div className="divide-y divide-[#E5E7EB]">
+      <div className="divide-y divide-border">
         {cleanings.length === 0 ? (
-          <div className="px-6 py-12 text-center text-[#6B7280]">
-            No se encontraron limpiezas
+          <div className="px-6 py-12 text-center">
+            <EmptyState
+              icon={Calendar}
+              title="No se encontraron limpiezas"
+              description="Ajusta los filtros o crea una nueva limpieza"
+            />
           </div>
         ) : (
           cleanings.map((cleaning) => (
-            <div key={cleaning.id} className="px-6 py-4 hover:bg-[#F9FAFB]">
+            <div key={cleaning.id} className="px-6 py-4 hover:bg-muted/30 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 space-y-2">
                   {/* Property */}
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-[#6B7280] mt-1 flex-shrink-0" />
+                    <MapPin className="w-4 h-4 text-muted-foreground mt-1 flex-shrink-0" />
                     <div>
-                      <p className="font-semibold text-[#111827]">
+                      <p className="font-semibold text-foreground">
                         {cleaning.property?.name || 'Sin propiedad'}
                       </p>
-                      <p className="text-sm text-[#6B7280]">{cleaning.property?.address}</p>
+                      <p className="text-sm text-muted-foreground">{cleaning.property?.address}</p>
                     </div>
                   </div>
 
                   {/* Details */}
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-[#6B7280]">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       <span>
@@ -101,7 +112,7 @@ export default function PMCleaningsList({ cleanings, total }: PMCleaningsListPro
                       <span>{cleaning.cleaner?.full_name || 'Sin asignar'}</span>
                     </div>
                     {cleaning.is_urgent && (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium text-[#EF4444]">
+                      <span className="inline-flex items-center gap-1 text-xs font-medium text-primary">
                         <AlertTriangle className="w-3 h-3" />
                         Urgente
                       </span>
@@ -110,11 +121,11 @@ export default function PMCleaningsList({ cleanings, total }: PMCleaningsListPro
 
                   {/* Type */}
                   <div>
-                    <span className="text-sm font-medium text-[#111827]">
+                    <span className="text-sm font-medium text-foreground">
                       {cleaning.cleaning_type?.name || 'N/A'}
                     </span>
                     {!cleaning.is_manual && (
-                      <span className="ml-2 text-xs text-[#6B7280]">(iCal)</span>
+                      <span className="ml-2 text-xs text-muted-foreground">(iCal)</span>
                     )}
                   </div>
                 </div>
@@ -123,14 +134,16 @@ export default function PMCleaningsList({ cleanings, total }: PMCleaningsListPro
                 <div className="flex items-center gap-2">
                   <CleaningStatusBadge status={cleaning.status} />
                   {canCancel(cleaning) && (
-                    <button
+                    <Button
                       onClick={() => handleCancel(cleaning.id)}
-                      disabled={loading === cleaning.id}
-                      className="p-2 text-[#EF4444] hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                      loading={loading === cleaning.id}
+                      variant="ghost"
+                      size="sm"
+                      className="text-destructive hover:bg-destructive/10"
                       title="Cancelar limpieza"
                     >
                       <XIcon className="w-5 h-5" />
-                    </button>
+                    </Button>
                   )}
                 </div>
               </div>

@@ -3,20 +3,38 @@ import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+/**
+ * Button Component - Elite Cleaning
+ * 
+ * Variantes principales:
+ * - primary: Rosa corporativo (color principal de la marca)
+ * - secondary: Lila (color secundario)
+ * - outline: Borde rosa, fondo transparente
+ * - ghost: Sin fondo, hover sutil
+ * - danger/success/warning: Estados semánticos
+ */
 const buttonVariants = cva(
   // Base styles
-  'inline-flex items-center justify-center gap-2 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
-        primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-        secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-500',
-        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-        success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500',
-        warning: 'bg-amber-500 text-white hover:bg-amber-600 focus:ring-amber-500',
-        ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
-        outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-500',
-        link: 'bg-transparent text-blue-600 hover:text-blue-700 hover:underline focus:ring-blue-500 p-0',
+        // Colores corporativos
+        primary: 'bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary shadow-sm',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/90 focus:ring-secondary shadow-sm',
+        
+        // Variantes sutiles
+        outline: 'border-2 border-primary bg-transparent text-primary hover:bg-primary/10 focus:ring-primary',
+        ghost: 'bg-transparent text-foreground hover:bg-muted focus:ring-primary',
+        link: 'bg-transparent text-primary hover:text-primary/80 hover:underline focus:ring-primary p-0',
+        
+        // Estados semánticos
+        danger: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive shadow-sm',
+        success: 'bg-success text-success-foreground hover:bg-success/90 focus:ring-success shadow-sm',
+        warning: 'bg-warning text-warning-foreground hover:bg-warning/90 focus:ring-warning shadow-sm',
+        
+        // Variante muted (gris suave)
+        muted: 'bg-muted text-muted-foreground hover:bg-muted/80 focus:ring-muted',
       },
       size: {
         xs: 'px-2 py-1 text-xs rounded',

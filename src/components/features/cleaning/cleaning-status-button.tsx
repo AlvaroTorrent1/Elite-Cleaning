@@ -3,8 +3,14 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
-import { Play, CheckCircle, Loader2, AlertTriangle } from 'lucide-react'
+import { Play, CheckCircle, Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+
+/**
+ * CleaningStatusButton - Botón flotante para cambiar estado de limpieza
+ * 
+ * Usa la paleta corporativa rosa/lila
+ */
 
 interface CleaningStatusButtonProps {
   cleaningId: string
@@ -49,7 +55,7 @@ export default function CleaningStatusButton({
   })
 
   const handleStatusChange = async () => {
-    if (currentStatus === 'pending') {
+    if (currentStatus === 'pending' || currentStatus === 'assigned') {
       // Confirmar inicio
       if (
         confirm('¿Comenzar esta limpieza ahora?\n\nSe registrará la hora de inicio.')
@@ -128,17 +134,17 @@ export default function CleaningStatusButton({
   }
 
   const getButtonConfig = () => {
-    if (currentStatus === 'pending') {
+    if (currentStatus === 'pending' || currentStatus === 'assigned') {
       return {
         icon: Play,
         text: 'Comenzar Limpieza',
-        bgColor: 'bg-blue-600 hover:bg-blue-700',
+        bgColor: 'bg-secondary hover:bg-secondary/90',
       }
     } else if (currentStatus === 'in_progress') {
       return {
         icon: CheckCircle,
         text: 'Finalizar Limpieza',
-        bgColor: 'bg-green-600 hover:bg-green-700',
+        bgColor: 'bg-primary hover:bg-primary/90',
       }
     }
     return null

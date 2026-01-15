@@ -16,6 +16,8 @@ interface RoleSignInButtonProps {
   bgClass: string
   imageSrc?: string
   imageAlt?: string
+  imageScale?: number // Scale factor for zoom (1 = normal, 1.5 = 150%, etc.)
+  imagePosition?: string // CSS object-position value (e.g., "center top")
 }
 
 export function RoleSignInButton({
@@ -28,6 +30,8 @@ export function RoleSignInButton({
   bgClass,
   imageSrc,
   imageAlt,
+  imageScale = 1,
+  imagePosition = 'center',
 }: RoleSignInButtonProps) {
   const [isLoading, setIsLoading] = useState(false)
   const supabase = createClient()
@@ -95,6 +99,10 @@ export function RoleSignInButton({
               width={112}
               height={112}
               className="object-cover w-full h-full"
+              style={{ 
+                transform: `scale(${imageScale})`,
+                objectPosition: imagePosition 
+              }}
             />
           </div>
         )}

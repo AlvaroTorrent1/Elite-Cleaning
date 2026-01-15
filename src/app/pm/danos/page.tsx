@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { AlertTriangle } from 'lucide-react'
 import DamageReportCard from '@/components/pm/reports/damage-report-card'
+import { PageHeader, StatCard, StatCardGrid, Card, EmptyState } from '@/components/ui'
 
 export default async function PMDanosPage() {
   const supabase = await createClient()
@@ -23,10 +24,13 @@ export default async function PMDanosPage() {
 
   if (propertyIds.length === 0) {
     return (
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-12 text-center">
-        <AlertTriangle className="w-12 h-12 text-[#E5E7EB] mx-auto mb-3" />
-        <p className="text-[#6B7280]">No tienes propiedades asignadas</p>
-      </div>
+      <Card className="text-center py-12">
+        <EmptyState
+          icon={AlertTriangle}
+          title="No tienes propiedades asignadas"
+          description="Contacta con el administrador para que te asigne propiedades"
+        />
+      </Card>
     )
   }
 
@@ -56,47 +60,52 @@ export default async function PMDanosPage() {
     .in('cleaning_id', cleaningIds)
     .order('created_at', { ascending: false })
 
+  const totalCost = damageReports?.reduce(
+    (sum, r) => sum + parseFloat(r.estimated_cost || '0'),
+    0
+  ) || 0
+
+  const pendingCount = damageReports?.filter((r) => !r.acknowledged_by_pm).length || 0
+
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-lg border border-[#E5E7EB] p-6">
-        <div className="flex items-center gap-3 mb-2">
-          <AlertTriangle className="w-6 h-6 text-[#EF4444]" />
-          <h1 className="text-2xl font-bold text-[#111827]">Reportes de Daños</h1>
-        </div>
-        <p className="text-[#6B7280]">Daños reportados por el equipo de limpieza</p>
-      </div>
+      <PageHeader
+        title="Reportes de Daños"
+        description="Daños reportados por el equipo de limpieza"
+      />
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Total Reportes</p>
-          <p className="text-2xl font-bold text-[#111827]">{damageReports?.length || 0}</p>
-        </div>
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Pendientes</p>
-          <p className="text-2xl font-bold text-[#EF4444]">
-            {damageReports?.filter((r) => !r.acknowledged_by_pm).length || 0}
-          </p>
-        </div>
-        <div className="bg-white rounded-lg border border-[#E5E7EB] p-4">
-          <p className="text-sm text-[#6B7280]">Costo Estimado</p>
-          <p className="text-2xl font-bold text-[#111827]">
-            €
-            {damageReports
-              ?.reduce((sum, r) => sum + parseFloat(r.estimated_cost || '0'), 0)
-              .toFixed(2) || '0.00'}
-          </p>
-        </div>
-      </div>
+      <StatCardGrid columns={3}>
+        <StatCard
+          title="Total Reportes"
+          value={damageReports?.length || 0}
+          icon={AlertTriangle}
+          variant="primary"
+        />
+        <StatCard
+          title="Pendientes"
+          value={pendingCount}
+          icon={AlertTriangle}
+          variant="accent5"
+        />
+        <StatCard
+          title="Costo Estimado"
+          value={`€${totalCost.toFixed(2)}`}
+          icon={AlertTriangle}
+          variant="accent4"
+        />
+      </StatCardGrid>
 
       {/* Reports List */}
       <div className="space-y-4">
         {!damageReports || damageReports.length === 0 ? (
-          <div className="bg-white rounded-lg border border-[#E5E7EB] p-12 text-center">
-            <AlertTriangle className="w-12 h-12 text-[#E5E7EB] mx-auto mb-3" />
-            <p className="text-[#6B7280]">No hay reportes de daños</p>
-          </div>
+          <Card className="text-center py-12">
+            <EmptyState
+              icon={AlertTriangle}
+              title="No hay reportes de daños"
+              description="Los daños reportados por el equipo de limpieza aparecerán aquí"
+            />
+          </Card>
         ) : (
           damageReports.map((report) => (
             <DamageReportCard key={report.id} report={report} />

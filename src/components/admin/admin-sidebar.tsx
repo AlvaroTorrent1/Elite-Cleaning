@@ -14,6 +14,7 @@ import {
   Settings,
   FileText,
   DollarSign,
+  MessageCircle,
 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
@@ -29,6 +30,11 @@ const navigation = [
     name: 'Dashboard',
     href: '/admin',
     icon: LayoutDashboard,
+  },
+  {
+    name: 'Mensajes',
+    href: '/admin/mensajes',
+    icon: MessageCircle,
   },
   {
     name: 'Usuarios',

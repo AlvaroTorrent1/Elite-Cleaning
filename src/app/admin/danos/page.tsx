@@ -86,29 +86,25 @@ export default async function DamagesPage({
           title="Total"
           value={totalDamages || 0}
           icon={AlertTriangle}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
         <StatCard
           title="Pendientes"
           value={pendingDamages || 0}
           icon={Clock}
-          iconColor="text-orange-600"
-          iconBgColor="bg-orange-50"
+          variant="accent4"
         />
         <StatCard
           title="Revisados"
           value={reviewedDamages || 0}
           icon={CheckCircle}
-          iconColor="text-green-600"
-          iconBgColor="bg-green-50"
+          variant="accent3"
         />
         <StatCard
           title="Costo Pendiente"
           value={`€${totalPendingCost.toFixed(2)}`}
           icon={Euro}
-          iconColor="text-red-600"
-          iconBgColor="bg-red-50"
+          variant="accent5"
         />
       </StatCardGrid>
 

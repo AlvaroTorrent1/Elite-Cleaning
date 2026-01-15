@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Clock, ClipboardList } from 'lucide-react'
 import CleaningTypesTable from '@/components/admin/cleaning-types/cleaning-types-table'
 import AddCleaningType from '@/components/admin/cleaning-types/add-cleaning-type'
-import { PageHeader, StatCard, StatCardGrid, Card } from '@/components/ui'
+import { PageHeader, StatCard, StatCardGrid, Card, IconVariant } from '@/components/ui'
 
 export default async function CleaningTypesPage() {
   const supabase = await createClient()
@@ -23,6 +23,9 @@ export default async function CleaningTypesPage() {
     cleanings_count: cleaningsCount?.filter((c) => c.cleaning_type_id === type.id).length || 0,
   }))
 
+  // Variantes de iconos para los tipos dinámicos
+  const typeVariants: IconVariant[] = ['secondary', 'accent1', 'accent2', 'accent3', 'accent4', 'accent5']
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -36,10 +39,9 @@ export default async function CleaningTypesPage() {
           title="Total Tipos"
           value={count || 0}
           icon={ClipboardList}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
-        {cleaningTypes?.map((type) => (
+        {cleaningTypes?.map((type, index) => (
           <StatCard
             key={type.id}
             title={type.name}
@@ -50,8 +52,7 @@ export default async function CleaningTypesPage() {
                 : undefined
             }
             icon={Clock}
-            iconColor="text-blue-600"
-            iconBgColor="bg-blue-50"
+            variant={typeVariants[index % typeVariants.length]}
           />
         ))}
       </StatCardGrid>

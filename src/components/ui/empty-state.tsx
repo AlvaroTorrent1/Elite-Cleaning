@@ -2,6 +2,12 @@ import { LucideIcon, Inbox } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 import { Button } from './button'
 
+/**
+ * EmptyState Component - Elite Cleaning
+ * 
+ * Usa colores del tema para consistencia
+ */
+
 interface EmptyStateProps {
   icon?: LucideIcon
   title: string
@@ -48,10 +54,10 @@ function EmptyState({
 
   return (
     <div className={cn('text-center', config.wrapper, className)}>
-      <Icon className={cn('mx-auto text-gray-300 mb-4', config.icon)} />
-      <p className={cn('font-medium text-gray-900', config.title)}>{title}</p>
+      <Icon className={cn('mx-auto text-muted-foreground/30 mb-4', config.icon)} />
+      <p className={cn('font-medium text-foreground', config.title)}>{title}</p>
       {description && (
-        <p className={cn('text-gray-500 mt-1', config.description)}>{description}</p>
+        <p className={cn('text-muted-foreground mt-1', config.description)}>{description}</p>
       )}
       {action && (
         <div className="mt-4">

@@ -40,29 +40,25 @@ export default async function CatalogPage() {
           title="Total Items"
           value={count || 0}
           icon={Package}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
         <StatCard
           title="Categorías"
           value={categories.length}
           icon={FolderOpen}
-          iconColor="text-blue-600"
-          iconBgColor="bg-blue-50"
+          variant="secondary"
         />
         <StatCard
           title="Precio Mínimo"
           value={`€${minPrice.toFixed(2)}`}
           icon={ArrowDown}
-          iconColor="text-green-600"
-          iconBgColor="bg-green-50"
+          variant="accent3"
         />
         <StatCard
           title="Precio Máximo"
           value={`€${maxPrice.toFixed(2)}`}
           icon={ArrowUp}
-          iconColor="text-red-600"
-          iconBgColor="bg-red-50"
+          variant="accent5"
         />
       </StatCardGrid>
 

@@ -2,8 +2,14 @@
 
 import { useState, createContext, useContext, ReactNode, useCallback } from 'react'
 import { AlertTriangle, Trash2, Info, HelpCircle } from 'lucide-react'
-import { Modal, ModalHeader, ModalBody, ModalFooter } from './modal'
+import { Modal, ModalBody, ModalFooter } from './modal'
 import { Button } from './button'
+
+/**
+ * ConfirmDialog Component - Elite Cleaning
+ * 
+ * Usa colores del tema para consistencia
+ */
 
 type ConfirmVariant = 'danger' | 'warning' | 'info' | 'default'
 
@@ -60,10 +66,10 @@ export function ConfirmProvider({ children }: ConfirmProviderProps) {
   }
 
   const variantConfig: Record<ConfirmVariant, { icon: typeof AlertTriangle; color: string; buttonVariant: 'danger' | 'warning' | 'primary' | 'secondary' }> = {
-    danger: { icon: Trash2, color: 'text-red-600', buttonVariant: 'danger' },
-    warning: { icon: AlertTriangle, color: 'text-amber-600', buttonVariant: 'warning' },
-    info: { icon: Info, color: 'text-blue-600', buttonVariant: 'primary' },
-    default: { icon: HelpCircle, color: 'text-gray-600', buttonVariant: 'primary' },
+    danger: { icon: Trash2, color: 'text-destructive', buttonVariant: 'danger' },
+    warning: { icon: AlertTriangle, color: 'text-warning', buttonVariant: 'warning' },
+    info: { icon: Info, color: 'text-info', buttonVariant: 'primary' },
+    default: { icon: HelpCircle, color: 'text-muted-foreground', buttonVariant: 'primary' },
   }
 
   const config = options ? variantConfig[options.variant || 'default'] : variantConfig.default
@@ -76,19 +82,19 @@ export function ConfirmProvider({ children }: ConfirmProviderProps) {
       <Modal isOpen={isOpen} onClose={handleCancel} size="sm">
         <ModalBody className="pt-6">
           <div className="flex flex-col items-center text-center">
-            <div className={`p-3 rounded-full bg-gray-100 mb-4`}>
+            <div className="p-3 rounded-full bg-muted mb-4">
               <Icon className={`w-6 h-6 ${config.color}`} />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               {options?.title}
             </h3>
-            <p className="text-gray-600 text-sm">
+            <p className="text-muted-foreground text-sm">
               {options?.message}
             </p>
           </div>
         </ModalBody>
         <ModalFooter className="justify-center">
-          <Button variant="secondary" onClick={handleCancel}>
+          <Button variant="muted" onClick={handleCancel}>
             {options?.cancelText || 'Cancelar'}
           </Button>
           <Button variant={config.buttonVariant} onClick={handleConfirm}>
@@ -125,10 +131,10 @@ export function ConfirmDialog({
   loading = false,
 }: ConfirmDialogProps) {
   const variantConfig: Record<ConfirmVariant, { icon: typeof AlertTriangle; color: string; buttonVariant: 'danger' | 'warning' | 'primary' | 'secondary' }> = {
-    danger: { icon: Trash2, color: 'text-red-600', buttonVariant: 'danger' },
-    warning: { icon: AlertTriangle, color: 'text-amber-600', buttonVariant: 'warning' },
-    info: { icon: Info, color: 'text-blue-600', buttonVariant: 'primary' },
-    default: { icon: HelpCircle, color: 'text-gray-600', buttonVariant: 'primary' },
+    danger: { icon: Trash2, color: 'text-destructive', buttonVariant: 'danger' },
+    warning: { icon: AlertTriangle, color: 'text-warning', buttonVariant: 'warning' },
+    info: { icon: Info, color: 'text-info', buttonVariant: 'primary' },
+    default: { icon: HelpCircle, color: 'text-muted-foreground', buttonVariant: 'primary' },
   }
 
   const config = variantConfig[variant]
@@ -138,15 +144,15 @@ export function ConfirmDialog({
     <Modal isOpen={isOpen} onClose={onCancel} size="sm">
       <ModalBody className="pt-6">
         <div className="flex flex-col items-center text-center">
-          <div className="p-3 rounded-full bg-gray-100 mb-4">
+          <div className="p-3 rounded-full bg-muted mb-4">
             <Icon className={`w-6 h-6 ${config.color}`} />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-          <p className="text-gray-600 text-sm">{message}</p>
+          <h3 className="text-lg font-semibold text-foreground mb-2">{title}</h3>
+          <p className="text-muted-foreground text-sm">{message}</p>
         </div>
       </ModalBody>
       <ModalFooter className="justify-center">
-        <Button variant="secondary" onClick={onCancel} disabled={loading}>
+        <Button variant="muted" onClick={onCancel} disabled={loading}>
           {cancelText}
         </Button>
         <Button variant={config.buttonVariant} onClick={onConfirm} loading={loading}>

@@ -1,10 +1,12 @@
 'use client'
 
-import { LogOut, Bell } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import NotificationBell from '@/components/shared/notification-bell'
 
 interface PMHeaderProps {
   profile: {
+    id: string
     full_name: string | null
     email: string
   }
@@ -31,13 +33,7 @@ export default function PMHeader({ profile }: PMHeaderProps) {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          <button
-            className="p-2 hover:bg-[#F9FAFB] rounded-lg transition-colors relative"
-            title="Notificaciones"
-          >
-            <Bell className="w-5 h-5 text-[#6B7280]" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#EF4444] rounded-full"></span>
-          </button>
+          <NotificationBell userId={profile.id} />
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-[#EF4444] hover:bg-red-50 rounded-lg transition-colors"

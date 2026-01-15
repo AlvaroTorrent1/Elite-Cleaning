@@ -95,29 +95,25 @@ export default async function CleaningsPage({
           title="Total"
           value={totalCleanings || 0}
           icon={Calendar}
-          iconColor="text-gray-600"
-          iconBgColor="bg-gray-50"
+          variant="primary"
         />
         <StatCard
           title="Pendientes"
           value={pendingCleanings || 0}
           icon={Clock}
-          iconColor="text-yellow-600"
-          iconBgColor="bg-yellow-50"
+          variant="accent2"
         />
         <StatCard
           title="En Curso"
           value={inProgressCleanings || 0}
           icon={PlayCircle}
-          iconColor="text-blue-600"
-          iconBgColor="bg-blue-50"
+          variant="secondary"
         />
         <StatCard
           title="Completadas"
           value={completedCleanings || 0}
           icon={CheckCircle}
-          iconColor="text-green-600"
-          iconBgColor="bg-green-50"
+          variant="accent3"
         />
       </StatCardGrid>
 

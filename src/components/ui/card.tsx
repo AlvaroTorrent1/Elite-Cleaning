@@ -1,6 +1,12 @@
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils/cn'
 
+/**
+ * Card Component - Elite Cleaning
+ * 
+ * Usa los colores del tema: bg-card, border-border
+ */
+
 interface CardProps {
   children: ReactNode
   className?: string
@@ -29,9 +35,9 @@ function Card({
     <Component
       onClick={onClick}
       className={cn(
-        'bg-white rounded-lg border border-gray-200',
+        'bg-card rounded-lg border border-border',
         paddingClasses[padding],
-        hover && 'hover:shadow-md hover:border-gray-300 transition-all',
+        hover && 'hover:shadow-md hover:border-primary/30 transition-all',
         onClick && 'cursor-pointer text-left w-full',
         className
       )}
@@ -51,11 +57,11 @@ function CardHeader({ children, className, action }: CardHeaderProps) {
   return (
     <div
       className={cn(
-        'flex items-center justify-between pb-4 border-b border-gray-200 mb-4',
+        'flex items-center justify-between pb-4 border-b border-border mb-4',
         className
       )}
     >
-      <h3 className="font-semibold text-gray-900">{children}</h3>
+      <h3 className="font-semibold text-foreground">{children}</h3>
       {action}
     </div>
   )
@@ -68,7 +74,7 @@ interface CardTitleProps {
 
 function CardTitle({ children, className }: CardTitleProps) {
   return (
-    <h3 className={cn('text-lg font-semibold text-gray-900', className)}>
+    <h3 className={cn('text-lg font-semibold text-foreground', className)}>
       {children}
     </h3>
   )
@@ -81,7 +87,7 @@ interface CardDescriptionProps {
 
 function CardDescription({ children, className }: CardDescriptionProps) {
   return (
-    <p className={cn('text-sm text-gray-600 mt-1', className)}>{children}</p>
+    <p className={cn('text-sm text-muted-foreground mt-1', className)}>{children}</p>
   )
 }
 
@@ -101,7 +107,7 @@ interface CardFooterProps {
 
 function CardFooter({ children, className }: CardFooterProps) {
   return (
-    <div className={cn('pt-4 border-t border-gray-200 mt-4', className)}>
+    <div className={cn('pt-4 border-t border-border mt-4', className)}>
       {children}
     </div>
   )

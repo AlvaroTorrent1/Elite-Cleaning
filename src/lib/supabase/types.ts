@@ -456,6 +456,105 @@ export interface Database {
           updated_at?: string
         }
       }
+      notifications: {
+        Row: {
+          id: string
+          user_id: string
+          type: string
+          title: string
+          message: string | null
+          data: Json | null
+          read: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          type: string
+          title: string
+          message?: string | null
+          data?: Json | null
+          read?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          type?: string
+          title?: string
+          message?: string | null
+          data?: Json | null
+          read?: boolean
+          created_at?: string
+        }
+      }
+      conversations: {
+        Row: {
+          id: string
+          participant_1_id: string
+          participant_2_id: string
+          last_message_text: string | null
+          last_message_at: string | null
+          last_message_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          participant_1_id: string
+          participant_2_id: string
+          last_message_text?: string | null
+          last_message_at?: string | null
+          last_message_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          participant_1_id?: string
+          participant_2_id?: string
+          last_message_text?: string | null
+          last_message_at?: string | null
+          last_message_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      messages: {
+        Row: {
+          id: string
+          conversation_id: string
+          sender_id: string
+          content: string
+          read_at: string | null
+          related_cleaning_id: string | null
+          related_damage_report_id: string | null
+          related_lost_item_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          conversation_id: string
+          sender_id: string
+          content: string
+          read_at?: string | null
+          related_cleaning_id?: string | null
+          related_damage_report_id?: string | null
+          related_lost_item_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          conversation_id?: string
+          sender_id?: string
+          content?: string
+          read_at?: string | null
+          related_cleaning_id?: string | null
+          related_damage_report_id?: string | null
+          related_lost_item_id?: string | null
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

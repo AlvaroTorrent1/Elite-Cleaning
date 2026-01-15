@@ -10,7 +10,8 @@ export type { BadgeProps } from './badge'
 export { Modal, ModalHeader, ModalBody, ModalFooter } from './modal'
 
 // StatCard
-export { StatCard, StatCardGrid, defaultColorMap } from './stat-card'
+export { StatCard, StatCardGrid, iconVariants } from './stat-card'
+export type { IconVariant } from './stat-card'
 
 // DropdownMenu
 export {

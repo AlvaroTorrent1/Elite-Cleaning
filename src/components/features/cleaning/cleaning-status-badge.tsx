@@ -1,5 +1,12 @@
 import { cn } from '@/lib/utils/cn'
 
+/**
+ * CleaningStatusBadge - Badge de estado de limpieza
+ * 
+ * Usa la paleta corporativa rosa/lila para la mayoría de estados,
+ * pero mantiene rojo para canceladas ya que es un estado negativo real.
+ */
+
 interface CleaningStatusBadgeProps {
   status: 'pending' | 'assigned' | 'in_progress' | 'completed' | 'cancelled'
 }
@@ -7,23 +14,23 @@ interface CleaningStatusBadgeProps {
 const statusConfig = {
   pending: {
     label: 'Pendiente',
-    className: 'bg-gray-100 text-gray-700',
+    className: 'bg-muted text-muted-foreground',
   },
   assigned: {
     label: 'Asignada',
-    className: 'bg-blue-100 text-blue-700',
+    className: 'bg-secondary/10 text-secondary',
   },
   in_progress: {
     label: 'En Curso',
-    className: 'bg-yellow-100 text-yellow-700',
+    className: 'bg-primary/10 text-primary',
   },
   completed: {
     label: 'Completada',
-    className: 'bg-green-100 text-green-700',
+    className: 'bg-[#E88BA6]/10 text-[#A66B7C]', // Rosa suave/oscuro
   },
   cancelled: {
     label: 'Cancelada',
-    className: 'bg-red-100 text-red-700',
+    className: 'bg-destructive/10 text-destructive',
   },
 }
 

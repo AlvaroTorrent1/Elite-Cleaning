@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -32,70 +33,148 @@ export default async function Home() {
     }
   }
 
-  // Si no está autenticado, mostrar landing y botón de login
+  // Si no está autenticado, mostrar landing estilo myelitecleaning.com
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-2xl text-center space-y-8">
-        <div className="space-y-4">
-          <h1 className="text-5xl font-bold text-gray-900">
-            Elite Cleaning
-          </h1>
-          <p className="text-xl text-gray-600">
-            Plataforma de Gestión de Limpiezas
-          </p>
-          <p className="text-gray-500">
-            Para propiedades de alquiler turístico en Málaga
-          </p>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Gestión</h3>
-              <p className="text-sm text-gray-600">Organiza limpiezas y equipos</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Checklists</h3>
-              <p className="text-sm text-gray-600">Digitales con fotos</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">Tiempo Real</h3>
-              <p className="text-sm text-gray-600">Visibilidad operativa</p>
-            </div>
-          </div>
-
-          <Link
-            href="/login"
-            className="block w-full px-6 py-3 text-center text-white bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
-          >
-            Acceder a la Plataforma
-          </Link>
-        </div>
-
-        <p className="text-sm text-gray-500">
-          ¿Necesitas ayuda? Contacta con{' '}
-          <a href="mailto:info@myelitecleaning.com" className="text-blue-600 hover:underline">
-            soporte
-          </a>
-        </p>
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Background Image - Se mostrará cuando subas hero-landing.jpg */}
+      <div className="absolute inset-0 z-0">
+        {/* Gradient fallback que replica los colores de myelitecleaning.com */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, #f5e6ea 0%, #f0e0eb 25%, #e8d5e8 50%, #d8c8e0 75%, #c8bcd8 100%)'
+          }}
+        />
+        {/* Imagen de fondo - descomenta cuando subas la imagen */}
+        {/* 
+        <Image
+          src="/images/hero-landing.jpg"
+          alt="My Elite Cleaning"
+          fill
+          className="object-cover"
+          priority
+        />
+        */}
+        {/* Overlay suave para mejorar legibilidad */}
+        <div className="absolute inset-0 bg-white/10" />
       </div>
+
+      {/* Header con botón de acceso */}
+      <header className="relative z-10 flex items-center justify-between px-6 py-4 md:px-12">
+        <div className="flex items-center gap-3">
+          <Image
+            src="/logos/My Elite Cleaning Logo Simple.png"
+            alt="My Elite Cleaning Logo"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+        </div>
+        
+        <Link
+          href="/login"
+          className="px-6 py-2.5 text-sm font-medium text-white rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+          style={{
+            background: 'linear-gradient(135deg, #c93a87 0%, #d64a8f 100%)',
+            boxShadow: '0 4px 15px rgba(201, 58, 135, 0.3)'
+          }}
+        >
+          Acceder
+        </Link>
+      </header>
+
+      {/* Contenido principal */}
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6 text-center">
+        {/* Logo y título */}
+        <div className="mb-8">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <span 
+              className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.3em] uppercase"
+              style={{ color: '#8B4B6B' }}
+            >
+              My Elite
+            </span>
+            <Image
+              src="/logos/My Elite Cleaning Logo Simple.png"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="object-contain md:w-[80px] md:h-[80px]"
+            />
+            <span 
+              className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.3em] uppercase"
+              style={{ color: '#8B4B6B' }}
+            >
+              Cleaning
+            </span>
+          </div>
+          
+          {/* Subtítulo de servicios */}
+          <p 
+            className="text-sm md:text-base tracking-[0.2em] uppercase mb-4"
+            style={{ color: '#A66B7C' }}
+          >
+            Limpieza | Lavado | Tapicería | Planchado
+          </p>
+          
+          {/* Eslogan */}
+          <p 
+            className="text-lg md:text-xl italic"
+            style={{ color: '#8B4B6B' }}
+          >
+            Simplificarse la vida nunca fue tan fácil...
+          </p>
+        </div>
+
+        {/* Card de acceso a la plataforma */}
+        <div 
+          className="mt-8 p-8 rounded-2xl backdrop-blur-sm max-w-md w-full"
+          style={{
+            background: 'rgba(255, 255, 255, 0.7)',
+            boxShadow: '0 8px 32px rgba(139, 75, 107, 0.1)'
+          }}
+        >
+          <h2 
+            className="text-xl font-medium mb-2"
+            style={{ color: '#8B4B6B' }}
+          >
+            Plataforma de Gestión
+          </h2>
+          <p className="text-gray-600 text-sm mb-6">
+            Acceso exclusivo para equipos de limpieza y gestores de propiedades
+          </p>
+          
+          <div className="space-y-3">
+            <Link
+              href="/login"
+              className="block w-full px-6 py-3.5 text-white font-medium rounded-full transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+              style={{
+                background: 'linear-gradient(135deg, #c93a87 0%, #d64a8f 100%)',
+                boxShadow: '0 4px 15px rgba(201, 58, 135, 0.25)'
+              }}
+            >
+              Acceder a la Plataforma
+            </Link>
+            
+            <p className="text-xs text-gray-500 pt-2">
+              ¿Necesitas ayuda?{' '}
+              <a 
+                href="mailto:info@myelitecleaning.com" 
+                className="underline hover:text-[#c93a87] transition-colors"
+              >
+                info@myelitecleaning.com
+              </a>
+            </p>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer minimalista */}
+      <footer className="relative z-10 py-4 text-center">
+        <p className="text-xs" style={{ color: '#A66B7C' }}>
+          © 2024 My Elite Cleaning - Costa del Sol
+        </p>
+      </footer>
     </div>
-  );
+  )
 }
