@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Disable Next.js dev indicator (bottom-left "N" button)
+  devIndicators: false,
 };
 
 export default nextConfig;

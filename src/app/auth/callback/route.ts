@@ -6,10 +6,16 @@ type UserRole = 'admin' | 'cleaner' | 'property_manager'
 const validRoles: UserRole[] = ['admin', 'cleaner', 'property_manager']
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url)
+  const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
   const requestedRole = searchParams.get('role') as UserRole | null // Rol solicitado por el usuario
   const next = searchParams.get('next') ?? '/'
+  
+  // CRITICAL: Use production URL in Vercel, localhost in development
+  // This prevents redirect to localhost when deployed
+  const origin = process.env.NEXT_PUBLIC_SITE_URL 
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+    || 'http://localhost:3000'
 
   if (code) {
     const supabase = await createClient()

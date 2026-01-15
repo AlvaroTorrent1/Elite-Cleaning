@@ -84,12 +84,12 @@ export default async function Home() {
       </header>
 
       {/* Contenido principal */}
-      <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6 text-center">
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-4 md:px-6 text-center">
         {/* Logo y título */}
-        <div className="mb-8">
-          <div className="flex items-center justify-center gap-4 mb-6">
+        <div className="mb-8 w-full max-w-4xl">
+          <div className="flex flex-col items-center justify-center gap-3 md:gap-4 mb-6">
             <span 
-              className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.3em] uppercase"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.15em] md:tracking-[0.2em] lg:tracking-[0.3em] uppercase"
               style={{ color: '#8B4B6B' }}
             >
               My Elite
@@ -97,12 +97,12 @@ export default async function Home() {
             <Image
               src="/logos/My Elite Cleaning Logo Simple.png"
               alt="Logo"
-              width={60}
-              height={60}
-              className="object-contain md:w-[80px] md:h-[80px]"
+              width={50}
+              height={50}
+              className="object-contain md:w-[70px] md:h-[70px] lg:w-[90px] lg:h-[90px]"
             />
             <span 
-              className="text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.3em] uppercase"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-[0.15em] md:tracking-[0.2em] lg:tracking-[0.3em] uppercase"
               style={{ color: '#8B4B6B' }}
             >
               Cleaning
@@ -111,7 +111,7 @@ export default async function Home() {
           
           {/* Subtítulo de servicios */}
           <p 
-            className="text-sm md:text-base tracking-[0.2em] uppercase mb-4"
+            className="text-xs sm:text-sm md:text-base tracking-[0.1em] sm:tracking-[0.15em] md:tracking-[0.2em] uppercase mb-4 px-2"
             style={{ color: '#A66B7C' }}
           >
             Limpieza | Lavado | Tapicería | Planchado
@@ -119,7 +119,7 @@ export default async function Home() {
           
           {/* Eslogan */}
           <p 
-            className="text-lg md:text-xl italic"
+            className="text-base sm:text-lg md:text-xl italic px-4"
             style={{ color: '#8B4B6B' }}
           >
             Simplificarse la vida nunca fue tan fácil...
@@ -128,19 +128,19 @@ export default async function Home() {
 
         {/* Card de acceso a la plataforma */}
         <div 
-          className="mt-8 p-8 rounded-2xl backdrop-blur-sm max-w-md w-full"
+          className="mt-6 sm:mt-8 p-6 sm:p-8 rounded-2xl backdrop-blur-sm max-w-md w-full mx-4"
           style={{
             background: 'rgba(255, 255, 255, 0.7)',
             boxShadow: '0 8px 32px rgba(139, 75, 107, 0.1)'
           }}
         >
           <h2 
-            className="text-xl font-medium mb-2"
+            className="text-lg sm:text-xl font-medium mb-2"
             style={{ color: '#8B4B6B' }}
           >
             Plataforma de Gestión
           </h2>
-          <p className="text-gray-600 text-sm mb-6">
+          <p className="text-gray-600 text-xs sm:text-sm mb-6">
             Acceso exclusivo para equipos de limpieza y gestores de propiedades
           </p>
           
