@@ -89,13 +89,7 @@ export default function PropertyDetailPage() {
         return
       }
 
-      // Eliminar configuraciones iCal primero
-      await supabase
-        .from('ical_configs')
-        .delete()
-        .eq('property_id', property.id)
-
-      // Eliminar la propiedad
+      // Eliminar la propiedad (los iCal URLs están en la misma tabla)
       const { error } = await supabase
         .from('properties')
         .delete()
