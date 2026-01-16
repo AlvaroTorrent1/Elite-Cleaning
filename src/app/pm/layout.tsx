@@ -1,8 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import Image from 'next/image'
-import PMHeader from '@/components/pm/pm-header'
-import PMNav from '@/components/pm/pm-nav'
+import PMSidebar from '@/components/pm/pm-sidebar'
 
 export default async function PMLayout({
   children,
@@ -50,25 +48,17 @@ export default async function PMLayout({
 
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
-      {/* Logo Header */}
-      <div className="sticky top-0 z-50 bg-white border-b border-[#E5E7EB]">
-        <div className="px-4 py-3 flex items-center justify-center">
-          <Image
-            src="/logos/My Elite Cleaning Logo Simple.png"
-            alt="Elite Cleaning"
-            width={120}
-            height={40}
-            className="object-contain"
-          />
-        </div>
-      </div>
+      {/* Sidebar (incluye header móvil y sidebar desktop) */}
+      <PMSidebar profile={profile} />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto">
-        <PMHeader profile={profile} />
-        <PMNav />
-        <main className="p-4 pb-20">{children}</main>
-      </div>
+      {/* En desktop: margen izquierdo para la sidebar (w-64 = 256px) */}
+      {/* En móvil: margen superior para el header fijo (h-16 = 64px) */}
+      <main className="lg:pl-64 pt-16 lg:pt-0">
+        <div className="max-w-7xl mx-auto p-4 lg:p-6">
+          {children}
+        </div>
+      </main>
     </div>
   )
 }

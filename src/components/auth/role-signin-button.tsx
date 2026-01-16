@@ -6,6 +6,25 @@ import Image from 'next/image'
 
 export type UserRole = 'admin' | 'cleaner' | 'property_manager'
 
+/**
+ * Función helper para obtener la URL base correcta
+ * 
+ * En el cliente, usamos window.location.origin que siempre
+ * refleja el dominio actual (localhost en dev, vercel.app en prod)
+ * 
+ * Esto es la solución definitiva recomendada por Supabase.
+ */
+function getRedirectURL(role: string): string {
+  // window.location.origin siempre devuelve el dominio correcto:
+  // - En desarrollo: http://localhost:3000
+  // - En producción: https://elite-cleaning-khaki.vercel.app
+  const origin = typeof window !== 'undefined' 
+    ? window.location.origin 
+    : ''
+  
+  return `${origin}/auth/callback?role=${role}`
+}
+
 interface RoleSignInButtonProps {
   role: UserRole
   label: string
@@ -40,11 +59,13 @@ export function RoleSignInButton({
     try {
       setIsLoading(true)
       
+      const redirectUrl = getRedirectURL(role)
+      console.log('OAuth redirect URL:', redirectUrl) // Debug para verificar
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // RESTAURADO: Pasamos el rol en la URL para que el callback sepa qué pidió el usuario
-          redirectTo: `${window.location.origin}/auth/callback?role=${role}`,
+          redirectTo: redirectUrl,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
