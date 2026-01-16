@@ -123,22 +123,29 @@ export async function POST(request: NextRequest) {
  * GET /api/ical-sync
  * 
  * Automatic sync of all iCal configs that need syncing.
- * Triggered by Vercel Cron every 15 minutes.
+ * Can be triggered by:
+ * - Vercel Cron (with Authorization header)
+ * - External cron service like cron-job.org (with ?secret= query param)
  * 
  * Security:
- * - In production, requires Vercel Cron authorization header
+ * - In production, requires CRON_SECRET via header OR query param
  * - In development, allows unauthenticated requests
  */
 export async function GET(request: NextRequest) {
   try {
-    // Verify Vercel Cron authorization in production
-    const authHeader = request.headers.get('authorization')
     const cronSecret = process.env.CRON_SECRET
 
-    // In production, verify the cron secret
-    if (process.env.NODE_ENV === 'production') {
-      // Vercel sends: Authorization: Bearer <CRON_SECRET>
-      if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    // In production, verify authorization
+    if (process.env.NODE_ENV === 'production' && cronSecret) {
+      const authHeader = request.headers.get('authorization')
+      const { searchParams } = new URL(request.url)
+      const querySecret = searchParams.get('secret')
+
+      // Accept either: Authorization header OR query param ?secret=
+      const isAuthorizedByHeader = authHeader === `Bearer ${cronSecret}`
+      const isAuthorizedByQuery = querySecret === cronSecret
+
+      if (!isAuthorizedByHeader && !isAuthorizedByQuery) {
         console.warn('⚠️ Unauthorized cron request')
         return NextResponse.json(
           { error: 'Unauthorized' },
