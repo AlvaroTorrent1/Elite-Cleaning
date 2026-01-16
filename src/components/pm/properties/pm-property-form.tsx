@@ -42,8 +42,6 @@ export default function PMPropertyForm({ property, cleaningTypes, userId }: PMPr
   const [formData, setFormData] = useState({
     name: property?.name || '',
     address: property?.address || '',
-    city: property?.city || 'Málaga',
-    postal_code: property?.postal_code || '',
     bedrooms: property?.bedrooms || 1,
     bathrooms: property?.bathrooms || 1,
     size_sqm: property?.size_sqm || '',
@@ -59,7 +57,7 @@ export default function PMPropertyForm({ property, cleaningTypes, userId }: PMPr
     setLoading(true)
 
     try {
-      if (!formData.name || !formData.address || !formData.city) {
+      if (!formData.name || !formData.address) {
         alert('⚠️ Por favor completa los campos obligatorios')
         setLoading(false)
         return
@@ -68,8 +66,6 @@ export default function PMPropertyForm({ property, cleaningTypes, userId }: PMPr
       const propertyData = {
         name: formData.name,
         address: formData.address,
-        city: formData.city,
-        postal_code: formData.postal_code || null,
         bedrooms: formData.bedrooms,
         bathrooms: formData.bathrooms,
         size_sqm: formData.size_sqm ? parseInt(formData.size_sqm.toString()) : null,
@@ -128,30 +124,15 @@ export default function PMPropertyForm({ property, cleaningTypes, userId }: PMPr
             placeholder="Ej: Apartamento Sol 3B"
           />
 
-          <Input
-            label="Ciudad"
-            required
-            value={formData.city}
-            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-            placeholder="Málaga"
-          />
-
           <div className="md:col-span-2">
             <Input
-              label="Dirección"
+              label="Dirección Completa"
               required
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              placeholder="Calle Larios 15, 3º B"
+              placeholder="Calle Larios 15, 3º B, 29001 Málaga"
             />
           </div>
-
-          <Input
-            label="Código Postal"
-            value={formData.postal_code}
-            onChange={(e) => setFormData({ ...formData, postal_code: e.target.value })}
-            placeholder="29001"
-          />
 
           <Select
             label="Tipo de Limpieza por Defecto"

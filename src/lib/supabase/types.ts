@@ -123,7 +123,13 @@ export interface Database {
           is_urgent: boolean
           is_manual: boolean
           ical_event_uid: string | null
+          ical_booking_uid_prefix: string | null
           ical_platform: 'airbnb' | 'booking' | 'other' | null
+          ical_config_id: string | null
+          ical_guest_name: string | null
+          ical_check_in_date: string | null
+          ical_check_out_date: string | null
+          ical_raw_event: Json | null
           guest_rejected: boolean
           guest_signature_url: string | null
           notes: string | null
@@ -143,7 +149,13 @@ export interface Database {
           is_urgent?: boolean
           is_manual?: boolean
           ical_event_uid?: string | null
+          ical_booking_uid_prefix?: string | null
           ical_platform?: 'airbnb' | 'booking' | 'other' | null
+          ical_config_id?: string | null
+          ical_guest_name?: string | null
+          ical_check_in_date?: string | null
+          ical_check_out_date?: string | null
+          ical_raw_event?: Json | null
           guest_rejected?: boolean
           guest_signature_url?: string | null
           notes?: string | null
@@ -163,7 +175,13 @@ export interface Database {
           is_urgent?: boolean
           is_manual?: boolean
           ical_event_uid?: string | null
+          ical_booking_uid_prefix?: string | null
           ical_platform?: 'airbnb' | 'booking' | 'other' | null
+          ical_config_id?: string | null
+          ical_guest_name?: string | null
+          ical_check_in_date?: string | null
+          ical_check_out_date?: string | null
+          ical_raw_event?: Json | null
           guest_rejected?: boolean
           guest_signature_url?: string | null
           notes?: string | null
@@ -555,12 +573,110 @@ export interface Database {
           created_at?: string
         }
       }
+      ical_sync_configs: {
+        Row: {
+          id: string
+          property_id: string
+          platform: 'airbnb' | 'booking' | 'other'
+          ical_url: string
+          ical_name: string | null
+          sync_interval_minutes: number
+          last_sync_at: string | null
+          last_sync_status: 'pending' | 'syncing' | 'success' | 'error'
+          last_sync_error: string | null
+          last_sync_events_found: number
+          last_sync_cleanings_created: number
+          last_sync_cleanings_updated: number
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          property_id: string
+          platform: 'airbnb' | 'booking' | 'other'
+          ical_url: string
+          ical_name?: string | null
+          sync_interval_minutes?: number
+          last_sync_at?: string | null
+          last_sync_status?: 'pending' | 'syncing' | 'success' | 'error'
+          last_sync_error?: string | null
+          last_sync_events_found?: number
+          last_sync_cleanings_created?: number
+          last_sync_cleanings_updated?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          property_id?: string
+          platform?: 'airbnb' | 'booking' | 'other'
+          ical_url?: string
+          ical_name?: string | null
+          sync_interval_minutes?: number
+          last_sync_at?: string | null
+          last_sync_status?: 'pending' | 'syncing' | 'success' | 'error'
+          last_sync_error?: string | null
+          last_sync_events_found?: number
+          last_sync_cleanings_created?: number
+          last_sync_cleanings_updated?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      ical_sync_logs: {
+        Row: {
+          id: string
+          property_id: string
+          platform: 'airbnb' | 'booking' | 'other'
+          sync_status: 'success' | 'error'
+          events_found: number | null
+          events_created: number | null
+          events_updated: number | null
+          events_cancelled: number | null
+          error_message: string | null
+          synced_at: string
+        }
+        Insert: {
+          id?: string
+          property_id: string
+          platform: 'airbnb' | 'booking' | 'other'
+          sync_status: 'success' | 'error'
+          events_found?: number | null
+          events_created?: number | null
+          events_updated?: number | null
+          events_cancelled?: number | null
+          error_message?: string | null
+          synced_at?: string
+        }
+        Update: {
+          id?: string
+          property_id?: string
+          platform?: 'airbnb' | 'booking' | 'other'
+          sync_status?: 'success' | 'error'
+          events_found?: number | null
+          events_created?: number | null
+          events_updated?: number | null
+          events_cancelled?: number | null
+          error_message?: string | null
+          synced_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_ical_configs_to_sync: {
+        Args: Record<string, never>
+        Returns: Database['public']['Tables']['ical_sync_configs']['Row'][]
+      }
+      should_sync_ical_config: {
+        Args: { config_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

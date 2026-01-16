@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, Calendar, AlertTriangle, Package, History, PlusCircle, MessageCircle } from 'lucide-react'
+import { Home, Calendar, AlertTriangle, Package, History, PlusCircle, MessageCircle, RefreshCw } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
 /**
@@ -16,6 +16,11 @@ const navigation = [
     name: 'Mis Propiedades',
     href: '/pm',
     icon: Home,
+  },
+  {
+    name: 'Calendario',
+    href: '/pm/calendario',
+    icon: RefreshCw,
   },
   {
     name: 'Limpiezas',
