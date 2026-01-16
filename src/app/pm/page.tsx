@@ -4,6 +4,10 @@ import Link from 'next/link'
 import PropertyCard from '@/components/pm/property-card'
 import { StatCard, StatCardGrid, Card } from '@/components/ui'
 
+// Forzar renderizado dinámico (sin caché)
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default async function PMDashboard() {
   const supabase = await createClient()
 
@@ -16,11 +20,21 @@ export default async function PMDashboard() {
   }
 
   // Obtener propiedades del PM
-  const { data: properties } = await supabase
+  const { data: properties, error: propertiesError } = await supabase
     .from('properties')
     .select('*')
     .eq('property_manager_id', user.id)
     .order('name')
+
+  // DEBUG: Log para verificar qué está pasando
+  console.log('🔍 PM Dashboard Debug:')
+  console.log('  User ID:', user.id)
+  console.log('  User Email:', user.email)
+  console.log('  Properties found:', properties?.length || 0)
+  console.log('  Properties error:', propertiesError?.message || 'none')
+  if (propertiesError) {
+    console.error('  Full error:', propertiesError)
+  }
 
   // Obtener estadísticas de limpiezas
   const { count: upcomingCleanings } = await supabase
