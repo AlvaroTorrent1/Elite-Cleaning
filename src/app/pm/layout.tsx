@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import PMSidebar from '@/components/pm/pm-sidebar'
 
+// Forzar renderizado dinámico para que siempre lea la sesión fresca
+export const dynamic = 'force-dynamic'
+
 export default async function PMLayout({
   children,
 }: {
