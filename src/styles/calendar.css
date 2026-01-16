@@ -1,0 +1,287 @@
+/* Estilos personalizados para react-big-calendar */
+
+/* Contenedor principal */
+.rbc-calendar {
+  font-family: inherit;
+  background: white;
+}
+
+/* Header del calendario */
+.rbc-header {
+  padding: 12px 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.rbc-header + .rbc-header {
+  border-left: 1px solid #e5e7eb;
+}
+
+/* Celdas del mes */
+.rbc-month-view {
+  border: none;
+  border-radius: 0;
+}
+
+.rbc-month-row {
+  border: none;
+}
+
+.rbc-month-row + .rbc-month-row {
+  border-top: 1px solid #e5e7eb;
+}
+
+.rbc-day-bg {
+  background: white;
+}
+
+.rbc-day-bg + .rbc-day-bg {
+  border-left: 1px solid #e5e7eb;
+}
+
+/* Día actual */
+.rbc-today {
+  background-color: #fef3f2 !important;
+}
+
+/* Días fuera del mes */
+.rbc-off-range-bg {
+  background: #f9fafb;
+}
+
+.rbc-off-range {
+  color: #9ca3af;
+}
+
+/* Fechas en el header del día */
+.rbc-date-cell {
+  padding: 4px 8px;
+  text-align: right;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.rbc-date-cell.rbc-now {
+  font-weight: 700;
+  color: #E91E63;
+}
+
+/* Eventos */
+.rbc-event {
+  padding: 2px 6px !important;
+  font-size: 0.75rem !important;
+  border-radius: 4px !important;
+  border: none !important;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rbc-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.rbc-event:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.3);
+}
+
+.rbc-event-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Eventos que continúan */
+.rbc-event-continues-prior {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.rbc-event-continues-after {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* Overlay de "ver más" */
+.rbc-overlay {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 8px;
+  max-width: 280px;
+}
+
+.rbc-overlay-header {
+  padding: 8px 8px 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 4px;
+}
+
+/* Link de "ver más" */
+.rbc-show-more {
+  color: #E91E63 !important;
+  font-weight: 500;
+  font-size: 0.75rem;
+  background: transparent !important;
+  padding: 2px 4px;
+}
+
+.rbc-show-more:hover {
+  text-decoration: underline;
+}
+
+/* Vista de semana y día */
+.rbc-time-view {
+  border: none;
+}
+
+.rbc-time-header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.rbc-time-header-cell {
+  min-height: 40px;
+}
+
+.rbc-time-content {
+  border-top: none;
+}
+
+.rbc-time-gutter {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.rbc-timeslot-group {
+  border-bottom: 1px solid #f3f4f6;
+  min-height: 40px;
+}
+
+.rbc-time-slot {
+  border-top: 1px dashed #f3f4f6;
+}
+
+/* Indicador de hora actual */
+.rbc-current-time-indicator {
+  background-color: #E91E63;
+  height: 2px;
+}
+
+.rbc-current-time-indicator::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  background: #E91E63;
+  border-radius: 50%;
+}
+
+/* Vista Agenda */
+.rbc-agenda-view {
+  border: none;
+}
+
+.rbc-agenda-view table {
+  border: none;
+}
+
+.rbc-agenda-view table thead {
+  background: #f9fafb;
+}
+
+.rbc-agenda-view table thead th {
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.rbc-agenda-view table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.rbc-agenda-view table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell {
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.rbc-agenda-event-cell {
+  padding: 12px 16px;
+  font-size: 0.875rem;
+}
+
+/* Eventos en agenda */
+.rbc-agenda-view .rbc-event {
+  display: inline-block;
+  padding: 4px 8px !important;
+  margin: 2px 0;
+}
+
+/* Mensajes de estado vacío */
+.rbc-agenda-empty {
+  text-align: center;
+  padding: 40px;
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .rbc-header {
+    padding: 8px 2px;
+    font-size: 0.625rem;
+  }
+
+  .rbc-date-cell {
+    padding: 2px 4px;
+    font-size: 0.75rem;
+  }
+
+  .rbc-event {
+    padding: 1px 4px !important;
+    font-size: 0.625rem !important;
+  }
+
+  .rbc-show-more {
+    font-size: 0.625rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rbc-overlay {
+  animation: fadeIn 0.15s ease-out;
+}

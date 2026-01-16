@@ -1,8 +1,15 @@
 import { createClient } from '@/lib/supabase/server'
-import { RefreshCw, Calendar, CheckCircle, AlertCircle, Clock, Plus } from 'lucide-react'
+import { RefreshCw, Calendar, CheckCircle, Clock, Settings } from 'lucide-react'
 import { Card, PageHeader } from '@/components/ui'
 import IcalPropertyList from '@/components/pm/ical/ical-property-list'
 import IcalSyncSummary from '@/components/pm/ical/ical-sync-summary'
+import ReservationsCalendar from '@/components/pm/calendar/reservations-calendar'
+import Link from 'next/link'
+
+import '@/styles/calendar.css'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function PMCalendarioPage() {
   const supabase = await createClient()
@@ -25,6 +32,27 @@ export default async function PMCalendarioPage() {
     .eq('property_manager_id', user.id)
     .order('name')
 
+  const propertyIds = properties?.map(p => p.id) || []
+
+  // Obtener todas las limpiezas con información de iCal para el calendario
+  const { data: cleanings } = await supabase
+    .from('cleanings')
+    .select(`
+      id,
+      property_id,
+      ical_guest_name,
+      ical_check_in_date,
+      ical_check_out_date,
+      ical_platform,
+      is_urgent,
+      status,
+      scheduled_date,
+      property:properties(id, name)
+    `)
+    .in('property_id', propertyIds)
+    .not('ical_check_in_date', 'is', null)
+    .order('ical_check_in_date', { ascending: true })
+
   // Calcular estadísticas
   const stats = {
     totalProperties: properties?.length || 0,
@@ -42,6 +70,26 @@ export default async function PMCalendarioPage() {
       )[0]?.last_sync_at || null,
   }
 
+  // Transformar propiedades para el calendario
+  const calendarProperties = properties?.map(p => ({
+    id: p.id,
+    name: p.name,
+  })) || []
+
+  // Transformar cleanings para el calendario
+  const calendarCleanings = cleanings?.map(c => ({
+    id: c.id,
+    property_id: c.property_id,
+    ical_guest_name: c.ical_guest_name,
+    ical_check_in_date: c.ical_check_in_date,
+    ical_check_out_date: c.ical_check_out_date,
+    ical_platform: c.ical_platform as 'airbnb' | 'booking' | 'other' | null,
+    is_urgent: c.is_urgent,
+    status: c.status,
+    scheduled_date: c.scheduled_date,
+    property: c.property as { id: string; name: string } | undefined,
+  })) || []
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -53,10 +101,43 @@ export default async function PMCalendarioPage() {
       {/* Resumen de sincronización */}
       <IcalSyncSummary stats={stats} />
 
+      {/* Calendario de Reservas */}
+      {properties && properties.length > 0 && (
+        <Card>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-secondary" />
+              Calendario de Reservas
+            </h2>
+            <span className="text-sm text-muted-foreground">
+              {cleanings?.length || 0} reservas sincronizadas
+            </span>
+          </div>
+
+          {cleanings && cleanings.length > 0 ? (
+            <ReservationsCalendar 
+              properties={calendarProperties} 
+              cleanings={calendarCleanings} 
+            />
+          ) : (
+            <div className="text-center py-12 bg-gray-50 rounded-lg">
+              <Calendar className="w-12 h-12 text-muted mx-auto mb-3" />
+              <p className="text-muted-foreground">No hay reservas sincronizadas</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Configura los calendarios iCal de tus propiedades para ver las reservas aquí
+              </p>
+            </div>
+          )}
+        </Card>
+      )}
+
       {/* Lista de propiedades con configuración iCal */}
       <Card>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-foreground">Mis Propiedades</h2>
+          <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <Settings className="w-5 h-5 text-muted-foreground" />
+            Configuración iCal
+          </h2>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <CheckCircle className="w-4 h-4 text-green-500" />
@@ -77,6 +158,12 @@ export default async function PMCalendarioPage() {
             <p className="text-sm text-muted-foreground mt-1">
               Añade una propiedad para empezar a sincronizar calendarios
             </p>
+            <Link 
+              href="/pm/propiedades/nueva"
+              className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90 transition-colors"
+            >
+              Añadir propiedad
+            </Link>
           </div>
         ) : (
           <IcalPropertyList properties={properties} />
