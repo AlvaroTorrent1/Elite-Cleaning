@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { X, Plus, Trash2, Loader2, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 
 interface IcalConfig {
   id: string
@@ -50,7 +50,7 @@ export default function IcalConfigModal({ isOpen, onClose, property }: IcalConfi
     }
   }, [property])
 
-  const supabase = createBrowserClient()
+  const supabase = createClient()
 
   const handleAddConfig = () => {
     // Find a platform that's not yet configured
